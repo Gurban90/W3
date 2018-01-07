@@ -5,24 +5,23 @@
             30
         </session-timeout>
     </session-config>
-    <resource-ref>
+       <resource-ref>
         <res-ref-name>jdbc/w3</res-ref-name>
         <res-type>javax.sql.ConnectionPoolDataSource</res-type>
         <res-auth>Container</res-auth>
         <res-sharing-scope>Shareable</res-sharing-scope>
     </resource-ref>
-   <servlet>
+    <servlet>
         <servlet-name>jersey-serlvet</servlet-name>
-            <servlet-class>
+        <servlet-class>
                      com.sun.jersey.spi.container.servlet.ServletContainer
                 </servlet-class>
         <init-param>
-             <param-name>jersey.config.server.provider.packages</param-name>
-             <param-value>service</param-value>
+            <param-name>jersey.config.server.provider.packages</param-name>
+            <param-value>service</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
-   
     <servlet-mapping>
         <servlet-name>jersey-serlvet</servlet-name>
         <url-pattern>/*</url-pattern>

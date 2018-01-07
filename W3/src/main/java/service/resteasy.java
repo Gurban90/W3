@@ -16,12 +16,12 @@ import javax.ws.rs.core.Response;
  */
 @Path("/publish")
 public class resteasy {
+
     
-@GET
+    @GET
     @Path("/{message}")
-    public Response publishMessage(@PathParam("message") String msgStr){
-         
-        String responseStr = "Received message: "+msgStr;
+    public Response publishMessage(@PathParam("message") String msgStr) {
+        String responseStr = "Received message: " + msgStr;
         return Response.status(200).entity(responseStr).build();
     }
 }
