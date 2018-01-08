@@ -14,6 +14,10 @@ import javax.ws.rs.core.Response;
  *
  * @author Gerben
  */
+
+
+//Voor test
+
 @Path("/publish")
 public class resteasy {
 
