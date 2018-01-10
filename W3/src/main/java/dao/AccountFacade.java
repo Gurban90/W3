@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package session;
+package dao;
 
-import entity.Orderdetail;
+import entity.Account;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Gerben
  */
 @Stateless
-public class OrderdetailFacade extends AbstractFacade<Orderdetail> {
+public class AccountFacade extends AbstractFacade<Account> {
 
     @PersistenceContext(unitName = "com.mycompany_W3_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class OrderdetailFacade extends AbstractFacade<Orderdetail> {
         return em;
     }
 
-    public OrderdetailFacade() {
-        super(Orderdetail.class);
+    public AccountFacade() {
+        super(Account.class);
     }
     
 }

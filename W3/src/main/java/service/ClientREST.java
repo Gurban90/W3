@@ -18,7 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import session.ClientFacade;
+import dao.ClientFacade;
 
 /**
  *
@@ -32,33 +32,33 @@ public class ClientREST {
     private ClientFacade clientdao;
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Client> findAll() {
         return clientdao.findAll();
     }
 
     @GET
     @Path("/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Client find(@PathParam("id") Integer id) {
         return clientdao.find(id);
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void create(Client entity) {
         clientdao.create(entity);
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Client entity) {
         clientdao.edit(entity);
     }
 
     @DELETE
     @Path("/{id}")
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {
         clientdao.remove(clientdao.find(id));
     }

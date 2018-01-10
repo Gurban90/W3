@@ -18,7 +18,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import session.OrderdetailFacade;
+import dao.OrderdetailFacade;
 
 /**
  *
@@ -32,33 +32,33 @@ public class OrderdetailREST {
     private OrderdetailFacade orderdetaildao;
 
     @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public List<Orderdetail> findAll() {
         return orderdetaildao.findAll();
     }
 
     @GET
     @Path("/{id}")
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
     public Orderdetail find(@PathParam("id") Integer id) {
         return orderdetaildao.find(id);
     }
 
     @POST
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void create(Orderdetail entity) {
         orderdetaildao.create(entity);
     }
 
     @PUT
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Orderdetail entity) {
         orderdetaildao.edit(entity);
     }
 
     @DELETE
     @Path("/{id}")
-     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {
         orderdetaildao.remove(orderdetaildao.find(id));
     }

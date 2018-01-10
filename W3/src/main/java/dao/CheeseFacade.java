@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package session;
+package dao;
 
-import entity.Orders;
+import entity.Cheese;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -15,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author Gerben
  */
 @Stateless
-public class OrdersFacade extends AbstractFacade<Orders> {
+public class CheeseFacade extends AbstractFacade<Cheese> {
 
     @PersistenceContext(unitName = "com.mycompany_W3_war_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -25,8 +26,9 @@ public class OrdersFacade extends AbstractFacade<Orders> {
         return em;
     }
 
-    public OrdersFacade() {
-        super(Orders.class);
+    public CheeseFacade() {
+        super(Cheese.class);
     }
     
 }
+
