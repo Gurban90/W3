@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Cheese</title>
+        <meta charset="UTF-8" />
+        <link type="text/css" href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <h1>Cheese</h1>
+        <ul>
+            <li><a href="/W3/">Home</a></li>
+            <li><a href="/W3/client.html">Client Information</a></li>
+            <li><a href="/W3/cheese.html">Cheeses</a></li>
+            <li><a href="/W3/address.html">Your Addresses</a></li>
+            <li><a href="/W3/account.html">Account Information</a></li>
+            <li><a href="/W3/orders.html">Orders</a></li>
+            <li><a href="/W3/rest/adminmain">Admin</a></li>
+            <li style="background:navy;"><a href="/account/add">Add Account</a></li>
+            <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
+            <li style="background:darkred;"><a>Logout</a></li>
+        </ul>
+        <br></br>
+        <button onclick="create()">Add Cheese</button>
+
+        <p id="demo"></p>
+
+        <script>
+            fetch('http://localhost:8080/W3/rest/cheese')
+                    .then(function (response) {
+                        return response.json();
+                    }
+                    ).then(function (jsonData) {
+                var text = "";
+                for (i = 0; i < jsonData.length; i++) {
+                    text += jsonData[i].cheeseID + " " + jsonData[i].name + " " + jsonData[i].price + " " + jsonData[i].stock + "<br>";
+                }
+                document.getElementById("demo").innerHTML = text;
+            });
+
+            function create() {
+                document.getElementById("demo").innerHTML = "Add Cheese";
+            };
+
+            function remove(id) {
+                document.getElementById("demo").innerHTML = "Delete Cheese";
+            };
+            
+             function edit(id) {
+                document.getElementById("demo").innerHTML = "Edit Cheese";
+            };
+            
+            function details(id) {
+                document.getElementById("demo").innerHTML = "Details Cheese";
+            };
+
+        </script>
+    </body>
+
+</html>

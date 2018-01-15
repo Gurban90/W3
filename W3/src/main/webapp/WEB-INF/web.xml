@@ -5,7 +5,10 @@
             30
         </session-timeout>
     </session-config>
-       <resource-ref>
+    <welcome-file-list>
+        <welcome-file>index.html</welcome-file>
+    </welcome-file-list>
+    <resource-ref>
         <res-ref-name>jdbc/w3</res-ref-name>
         <res-type>javax.sql.ConnectionPoolDataSource</res-type>
         <res-auth>Container</res-auth>
@@ -14,8 +17,8 @@
     <servlet>
         <servlet-name>jersey-serlvet</servlet-name>
         <servlet-class>
-                     com.sun.jersey.spi.container.servlet.ServletContainer
-                </servlet-class>
+            com.sun.jersey.spi.container.servlet.ServletContainer
+        </servlet-class>
         <init-param>
             <param-name>jersey.config.server.provider.packages</param-name>
             <param-value>service</param-value>
@@ -24,6 +27,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>jersey-serlvet</servlet-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -1,12 +1,14 @@
 <!DOCTYPE html>
+
 <html>
     <head>
-        <title>Main</title>
+        <title>Address</title>
         <meta charset="UTF-8" />
         <link type="text/css" href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
-        <ul>
+        <h1>Address</h1>
+       <ul>
             <li><a href="/W3/">Home</a></li>
             <li><a href="/W3/client.html">Client Information</a></li>
             <li><a href="/W3/cheese.html">Cheeses</a></li>
@@ -18,9 +20,26 @@
             <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
             <li style="background:darkred;"><a>Logout</a></li>
         </ul>
-        <h1>Main Menu</h1>
-        <br></br>
-        <p>Welcome to the world of Cheese!</p>
-        <p><img src="css/Cheese.jpg" alt="Cheese" /></p>
+        <a href="/W3/cheese/add">Add Cheese</a>
+
+        <p id="demo"></p>
+
+       <!--
+    <script>
+        fetch('http://localhost:8080/W3/rest/cheese')
+                .then(function (response) {
+                    return response.json();
+                }
+                ).then(function (jsonData) {
+
+            var text = "";
+            for (i = 0; i < jsonData.length; i++) {
+                text += jsonData[i].cheeseID + " " + jsonData[i].name + " " + jsonData[i].price + " " + jsonData[i].stock + "<br>";
+            }
+            document.getElementById("demo").innerHTML = text;
+        });
+    </script>*/
+</body>-->
     </body>
+
 </html>
