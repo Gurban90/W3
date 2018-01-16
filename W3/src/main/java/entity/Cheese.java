@@ -43,7 +43,6 @@ public class Cheese implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "CheeseID")
     private Integer cheeseID;
     @Size(max = 45)
@@ -130,5 +129,5 @@ public class Cheese implements Serializable {
     public String toString() {
         return "entity.Cheese[ cheeseID=" + cheeseID + " ]";
     }
-    
+
 }
