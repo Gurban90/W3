@@ -5,10 +5,13 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,6 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Addresstype.findAll", query = "SELECT a FROM Addresstype a")
     , @NamedQuery(name = "Addresstype.findByAddresstypeID", query = "SELECT a FROM Addresstype a WHERE a.addresstypeID = :addresstypeID")
     , @NamedQuery(name = "Addresstype.findByTypename", query = "SELECT a FROM Addresstype a WHERE a.typename = :typename")})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "addresstypeID")
 public class Addresstype implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -44,7 +50,8 @@ public class Addresstype implements Serializable {
     @Size(max = 45)
     @Column(name = "Typename")
     private String typename;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "addresstypeID")
+    @OneToMany(mappedBy = "addresstypeID")
+    @JsonIgnoreProperties("addresstypeID")
     private Collection<Address> addressCollection;
 
     public Addresstype() {
@@ -103,5 +110,5 @@ public class Addresstype implements Serializable {
     public String toString() {
         return "entity.Addresstype[ addresstypeID=" + addresstypeID + " ]";
     }
-    
+
 }

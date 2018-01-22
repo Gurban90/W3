@@ -19,6 +19,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import dao.AddressFacade;
+import dao.AddresstypeFacade;
+import dao.ClientFacade;
+import entity.Addresstype;
+import entity.Client;
 
 @Path("/address")
 @Stateless
@@ -26,6 +30,12 @@ public class AddressREST {
 
     @EJB
     private AddressFacade addressdao;
+
+    @EJB
+    private AddresstypeFacade addresstypedao;
+
+    @EJB
+    private ClientFacade clientdao;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -43,12 +53,21 @@ public class AddressREST {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public void create(Address entity) {
+        Client client = clientdao.find(entity.getClientID().getClientID());
+        Addresstype addresstype = addresstypedao.find(entity.getAddresstypeID().getAddresstypeID());
+        entity.setAddresstypeID(addresstype);
+        entity.setClientID(client);
         addressdao.create(entity);
     }
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Address entity) {
+        System.out.println(entity.getCity());
+        Client client = clientdao.find(entity.getClientID().getClientID());
+        Addresstype addresstype = addresstypedao.find(entity.getAddresstypeID().getAddresstypeID());
+        entity.setAddresstypeID(addresstype);
+        entity.setClientID(client);
         addressdao.edit(entity);
     }
 

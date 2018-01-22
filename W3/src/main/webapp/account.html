@@ -6,38 +6,60 @@
         <meta charset="UTF-8" />
         <link type="text/css" href="css/styles.css" rel="stylesheet" />
     </head>
+
     <body>
-        <h1>Account</h1>
-        <ul>
-            <li><a href="/W3/">Home</a></li>
-            <li><a href="/W3/client.html">Client Information</a></li>
-            <li><a href="/W3/cheese.html">Cheeses</a></li>
-            <li><a href="/W3/address.html">Your Addresses</a></li>
-            <li><a href="/W3/account.html">Account Information</a></li>
-            <li><a href="/W3/orders.html">Orders</a></li>
-            <li><a href="/W3/rest/adminmain">Admin</a></li>
-            <li style="background:navy;"><a href="/account/add">Add Account</a></li>
-            <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
-            <li style="background:darkred;"><a>Logout</a></li>
-        </ul>
-    <a href="/W3/cheese/add">Add Cheese</a>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                text-align: left;
 
-    <p id="demo"></p>
-<!--
-    <script>
-        fetch('http://localhost:8080/W3/rest/cheese')
-                .then(function (response) {
-                    return response.json();
-                }
-                ).then(function (jsonData) {
+            </style>
 
-            var text = "";
-            for (i = 0; i < jsonData.length; i++) {
-                text += jsonData[i].cheeseID + " " + jsonData[i].name + " " + jsonData[i].price + " " + jsonData[i].stock + "<br>";
-            }
-            document.getElementById("demo").innerHTML = text;
-        });
-    </script>*/
-</body>-->
+            <ul>
+                <li><a href="/W3/">Home</a></li>
+                <li><a href="/W3/client.html">Client Information</a></li>
+                <li><a href="/W3/cheese.html">Cheeses</a></li>
+                <li><a href="/W3/address.html">Your Addresses</a></li>
+                <li><a href="/W3/account.html">Account Information</a></li>
+                <li><a href="/W3/orders.html">Orders</a></li>
+                <li><a href="/W3/rest/adminmain">Admin</a></li>
+                <li style="background:navy;"><a onclick="gotomain()" href="javascript:void(0);">Add Account</a></li>
+                <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
+                <li style="background:darkred;"><a>Logout</a></li>
+            </ul>
+            <h1>Account</h1>
+            <br>
 
-</html>
+            <p id="demo"></p>
+
+             <form onsubmit="editor()" id="form2" style="display:none"> 
+                    Edit Account <br> 
+                    <input type="hidden" name="id" id="id">
+                    Password
+                    <input type="password" name="password" required="required" id="password">
+                    <input type="hidden" name="username" id="username">
+                    <input type="hidden" name="role" id="role">
+                    <input type="hidden" name="client" id="client">
+                    <input type="submit" value="Edit">
+                </form>
+            <br>
+
+            <table style="width:80%">
+                    <tr>
+                        <th>Id</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Role</th>
+                    </tr>
+                    <tbody id="accounts">
+                    </tbody>
+                </table>
+
+                <script src="js/account.js">
+
+                </script>
+            </body>
+
+        </html>

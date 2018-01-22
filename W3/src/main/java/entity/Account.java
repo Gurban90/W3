@@ -5,6 +5,8 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -16,6 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -33,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username = :username")
     , @NamedQuery(name = "Account.findByPassword", query = "SELECT a FROM Account a WHERE a.password = :password")
     , @NamedQuery(name = "Account.findByTheRole", query = "SELECT a FROM Account a WHERE a.theRole = :theRole")})
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "accountID")
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,7 +57,7 @@ public class Account implements Serializable {
     @Column(name = "theRole")
     private String theRole;
     @JoinColumn(name = "ClientID", referencedColumnName = "ClientID")
-    @ManyToOne(optional = false)
+    @OneToOne
     private Client clientID;
 
     public Account() {

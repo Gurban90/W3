@@ -2,44 +2,67 @@
 
 <html>
     <head>
-        <title>Address</title>
+        <title>Addresstype</title>
         <meta charset="UTF-8" />
         <link type="text/css" href="css/styles.css" rel="stylesheet" />
     </head>
+
     <body>
-        <h1>Address</h1>
-       <ul>
-            <li><a href="/W3/">Home</a></li>
-            <li><a href="/W3/client.html">Client Information</a></li>
-            <li><a href="/W3/cheese.html">Cheeses</a></li>
-            <li><a href="/W3/address.html">Your Addresses</a></li>
-            <li><a href="/W3/account.html">Account Information</a></li>
-            <li><a href="/W3/orders.html">Orders</a></li>
-            <li><a href="/W3/rest/adminmain">Admin</a></li>
-            <li style="background:navy;"><a href="/account/add">Add Account</a></li>
-            <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
-            <li style="background:darkred;"><a>Logout</a></li>
-        </ul>
-        <a href="/W3/cheese/add">Add Cheese</a>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                text-align: left;
+            </style>
 
-        <p id="demo"></p>
+            <ul>
+                <li><a href="/W3/">Home</a></li>
+                <li><a href="/W3/client.html">Client Information</a></li>
+                <li><a href="/W3/cheese.html">Cheeses</a></li>
+                <li><a href="/W3/address.html">Your Addresses</a></li>
+                <li><a href="/W3/account.html">Account Information</a></li>
+                <li><a href="/W3/orders.html">Orders</a></li>
+                <li><a href="/W3/rest/adminmain">Admin</a></li>
+                <li style="background:navy;"><a onclick="gotomain()" href="javascript:void(0);">Add Account</a></li>
+                <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
+                <li style="background:darkred;"><a>Logout</a></li>
+            </ul>
+            <h1>Addresstype</h1>
+            <br>
 
-       <!--
-    <script>
-        fetch('http://localhost:8080/W3/rest/cheese')
-                .then(function (response) {
-                    return response.json();
-                }
-                ).then(function (jsonData) {
+            <form onsubmit="create()" id="form"> 
+                Add new Addresstype <br> 
+                Type name:
+                <input type="text" name="typename" required="required" id="typename">
+                <input type="submit" value="Add">
+            </form>
 
-            var text = "";
-            for (i = 0; i < jsonData.length; i++) {
-                text += jsonData[i].cheeseID + " " + jsonData[i].name + " " + jsonData[i].price + " " + jsonData[i].stock + "<br>";
-            }
-            document.getElementById("demo").innerHTML = text;
-        });
-    </script>*/
-</body>-->
-    </body>
+            <p id="demo"></p>
 
-</html>
+            <form onsubmit="editor()" id="form2" style="display:none"> 
+                    Edit Cheese: <br> 
+                    <input type="hidden" name="id" id="editid">
+                    Type name:
+                    <input type="text" name="typename" required="required" id="edittypename">
+                    <input type="submit" value="Edit">
+                </form>
+
+                <br>
+
+                <table style="width:80%">
+                    <tr>
+                        <th>Id</th>
+                        <th>Typename</th>
+                       
+                    </tr>
+                    <tbody id="addresstypes">
+                    </tbody>
+                </table>
+
+                <script src="js/addresstype.js">
+
+                </script>
+            </body>
+
+        </html>

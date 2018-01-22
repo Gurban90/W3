@@ -5,6 +5,10 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -30,6 +34,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Orderdetail.findAll", query = "SELECT o FROM Orderdetail o")
     , @NamedQuery(name = "Orderdetail.findByOrderdetailID", query = "SELECT o FROM Orderdetail o WHERE o.orderdetailID = :orderdetailID")
     , @NamedQuery(name = "Orderdetail.findByQuantity", query = "SELECT o FROM Orderdetail o WHERE o.quantity = :quantity")})
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "orderdetailID")
 public class Orderdetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +52,8 @@ public class Orderdetail implements Serializable {
     private Cheese cheeseID;
     @JoinColumn(name = "OrdersID", referencedColumnName = "OrdersID")
     @ManyToOne(optional = false)
-    private Orders ordersID;
+    @JsonIgnoreProperties("orderdetailCollection")
+        private Orders ordersID;
 
     public Orderdetail() {
     }

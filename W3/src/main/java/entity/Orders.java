@@ -5,6 +5,10 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
@@ -12,6 +16,7 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,9 +42,12 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o")
     , @NamedQuery(name = "Orders.findByOrdersID", query = "SELECT o FROM Orders o WHERE o.ordersID = :ordersID")
-    , @NamedQuery(name = "Orders.findByDate", query = "SELECT o FROM Orders o WHERE o.date = :date")
+    , @NamedQuery(name = "Orders.findByCurrentdate", query = "SELECT o FROM Orders o WHERE o.currentdate = :currentdate")
     , @NamedQuery(name = "Orders.findByTotalprice", query = "SELECT o FROM Orders o WHERE o.totalprice = :totalprice")
     , @NamedQuery(name = "Orders.findByEnddate", query = "SELECT o FROM Orders o WHERE o.enddate = :enddate")})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "ordersID")
 public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -48,9 +56,9 @@ public class Orders implements Serializable {
     @Basic(optional = false)
     @Column(name = "OrdersID")
     private Integer ordersID;
-    @Column(name = "Date")
+    @Column(name = "Currentdate")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date currentdate;
     @Size(max = 45)
     @Column(name = "Totalprice")
     private String totalprice;
@@ -59,8 +67,10 @@ public class Orders implements Serializable {
     private Date enddate;
     @JoinColumn(name = "ClientID", referencedColumnName = "ClientID")
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("ordersCollection")
     private Client clientID;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordersID")
+    @JsonIgnoreProperties("ordersID")
     private Collection<Orderdetail> orderdetailCollection;
 
     public Orders() {
@@ -78,12 +88,12 @@ public class Orders implements Serializable {
         this.ordersID = ordersID;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getCurrentdate() {
+        return currentdate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCurrentdate(Date currentdate) {
+        this.currentdate = currentdate;
     }
 
     public String getTotalprice() {
@@ -143,5 +153,5 @@ public class Orders implements Serializable {
     public String toString() {
         return "entity.Orders[ ordersID=" + ordersID + " ]";
     }
-    
+
 }

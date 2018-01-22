@@ -6,40 +6,74 @@
         <meta charset="UTF-8" />
         <link type="text/css" href="css/styles.css" rel="stylesheet" />
     </head>
+
     <body>
-        <h1>Orders</h1>
-      <ul>
-            <li><a href="/W3/">Home</a></li>
-            <li><a href="/W3/client.html">Client Information</a></li>
-            <li><a href="/W3/cheese.html">Cheeses</a></li>
-            <li><a href="/W3/address.html">Your Addresses</a></li>
-            <li><a href="/W3/account.html">Account Information</a></li>
-            <li><a href="/W3/orders.html">Orders</a></li>
-            <li><a href="/W3/rest/adminmain">Admin</a></li>
-            <li style="background:navy;"><a href="/account/add">Add Account</a></li>
-            <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
-            <li style="background:darkred;"><a>Logout</a></li>
-        </ul>
-        <a href="/W3/cheese/add">Add Cheese</a>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                text-align: left;
+            </style>
+            
+            <ul>
+                <li><a href="/W3/">Home</a></li>
+                <li><a href="/W3/client.html">Client Information</a></li>
+                <li><a href="/W3/cheese.html">Cheeses</a></li>
+                <li><a href="/W3/address.html">Your Addresses</a></li>
+                <li><a href="/W3/account.html">Account Information</a></li>
+                <li><a href="/W3/orders.html">Orders</a></li>
+                <li><a href="/W3/rest/adminmain">Admin</a></li>
+                <li style="background:navy;"><a onclick="gotomain()" href="javascript:void(0);">Add Account</a></li>
+                <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
+                <li style="background:darkred;"><a>Logout</a></li>
+            </ul>
+<h1>Orders</h1>
+            <br>
+            
+            <button onclick="create()">Add</button>
 
-        <p id="demo"></p>
+            <p id="demo"></p>
 
-       <!--
-    <script>
-        fetch('http://localhost:8080/W3/rest/cheese')
-                .then(function (response) {
-                    return response.json();
-                }
-                ).then(function (jsonData) {
+            <form onsubmit="editor()" id="form2" style="display:none"> 
+                    Edit Cheese: <br> 
+                    <input type="hidden" name="id" id="editid">
+                    Name:
+                    <input type="text" name="name" required="required" id="editname">
+                    Price:
+                    <input type="number" name="price" placeholder="0.00" min="0" value="0" step="0.01" id="editprice">
+                    Stock:
+                    <input type="number" name="stock" required="required" id="editstock">
 
-            var text = "";
-            for (i = 0; i < jsonData.length; i++) {
-                text += jsonData[i].cheeseID + " " + jsonData[i].name + " " + jsonData[i].price + " " + jsonData[i].stock + "<br>";
-            }
-            document.getElementById("demo").innerHTML = text;
-        });
-    </script>*/
-</body>-->
-    </body>
+                    <input type="submit" value="Edit">
+                </form>
 
-</html>
+                <br>
+
+                <table style="width:80%">
+                    <tr>
+                        <th>Id</th>
+                        <th>Order Date</th>
+                        <th>Total Price</th>
+                        <th>Delivery Date</th>
+                                               
+                    </tr>
+                    <tbody id="orders">
+                    </tbody>
+                </table>
+                
+                  <br>
+                <p id="demo2"></p>
+                <br>
+                
+                  <table style="width:80%">
+                    <tbody id="orderdetails">
+                    </tbody>
+                </table>
+
+                <script src="js/orders.js">
+                    
+                </script>
+            </body>
+
+        </html>

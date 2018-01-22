@@ -5,6 +5,10 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -35,8 +39,11 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Address.findByHousenumberAddition", query = "SELECT a FROM Address a WHERE a.housenumberAddition = :housenumberAddition")
     , @NamedQuery(name = "Address.findByPostalcode", query = "SELECT a FROM Address a WHERE a.postalcode = :postalcode")
     , @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city")})
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class, 
+  property = "addressID")
 public class Address implements Serializable {
-
+ 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +56,7 @@ public class Address implements Serializable {
     @Column(name = "Housenumber")
     private Integer housenumber;
     @Size(max = 45)
-    @Column(name = "Housenumber Addition")
+    @Column(name = "HousenumberAddition")
     private String housenumberAddition;
     @Size(max = 45)
     @Column(name = "Postalcode")
@@ -59,9 +66,11 @@ public class Address implements Serializable {
     private String city;
     @JoinColumn(name = "AddresstypeID", referencedColumnName = "AddresstypeID")
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("addressCollection")
     private Addresstype addresstypeID;
     @JoinColumn(name = "ClientID", referencedColumnName = "ClientID")
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("addressCollection")
     private Client clientID;
 
     public Address() {
@@ -155,9 +164,4 @@ public class Address implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "entity.Address[ addressID=" + addressID + " ]";
-    }
-    
 }

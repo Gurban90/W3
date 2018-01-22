@@ -19,6 +19,11 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import dao.OrdersFacade;
+import entity.Client;
+import static java.math.BigDecimal.ZERO;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  *
@@ -47,8 +52,17 @@ public class OrdersREST {
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
     public void create(Orders entity) {
+        Client client = new Client();
+        client.setClientID(16);
+        Date today=new Date();
+        long ltime=today.getTime()+7*24*60*60*1000;
+        entity.setCurrentdate(new Date());
+        entity.setEnddate(new Date(ltime));
+        entity.setTotalprice("0");
+        entity.setClientID(client);
         ordersdao.create(entity);
     }
+    
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})

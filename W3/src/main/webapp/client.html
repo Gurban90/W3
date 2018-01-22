@@ -6,40 +6,74 @@
         <meta charset="UTF-8" />
         <link type="text/css" href="css/styles.css" rel="stylesheet" />
     </head>
+
     <body>
-        <h1>Client</h1>
-      <ul>
-            <li><a href="/W3/">Home</a></li>
-            <li><a href="/W3/client.html">Client Information</a></li>
-            <li><a href="/W3/cheese.html">Cheeses</a></li>
-            <li><a href="/W3/address.html">Your Addresses</a></li>
-            <li><a href="/W3/account.html">Account Information</a></li>
-            <li><a href="/W3/orders.html">Orders</a></li>
-            <li><a href="/W3/rest/adminmain">Admin</a></li>
-            <li style="background:navy;"><a href="/account/add">Add Account</a></li>
-            <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
-            <li style="background:darkred;"><a>Logout</a></li>
-        </ul>
-        <a href="/W3/cheese/add">Add Cheese</a>
-        
-        <p id="demo"></p>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                text-align: left;
+            </style>
+            
+            <ul>
+                <li><a href="/W3/">Home</a></li>
+                <li><a href="/W3/client.html">Client Information</a></li>
+                <li><a href="/W3/cheese.html">Cheeses</a></li>
+                <li><a href="/W3/address.html">Your Addresses</a></li>
+                <li><a href="/W3/account.html">Account Information</a></li>
+                <li><a href="/W3/orders.html">Orders</a></li>
+                <li><a href="/W3/rest/adminmain">Admin</a></li>
+               <li style="background:navy;"><a onclick="gotomain()" href="javascript:void(0);">Add Account</a></li>
+                <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
+                <li style="background:darkred;"><a>Logout</a></li>
+            </ul>
+<h1>Client</h1>
+            <br>
 
-      <!--
-    <script>
-        fetch('http://localhost:8080/W3/rest/cheese')
-                .then(function (response) {
-                    return response.json();
-                }
-                ).then(function (jsonData) {
+            <form onsubmit="create()" id="form"> 
+                Add new Client <br> 
+                First name:
+                <input type="text" name="firstname" required="required" id="firstname">
+                Last name:
+                <input type="text" name="lastname" required="required" id="lastname">
+                E-mail:
+                <input type="email" name="email" required="required" id="email">
+                <input type="submit" value="Add">
+            </form>
 
-            var text = "";
-            for (i = 0; i < jsonData.length; i++) {
-                text += jsonData[i].cheeseID + " " + jsonData[i].name + " " + jsonData[i].price + " " + jsonData[i].stock + "<br>";
-            }
-            document.getElementById("demo").innerHTML = text;
-        });
-    </script>*/
-</body>-->
-    </body>
+            <p id="demo"></p>
 
-</html>
+            <form onsubmit="editor()" id="form2" style="display:none"> 
+                    Edit Client: <br> 
+                    <input type="hidden" name="id" id="editid">
+                    Name:
+                    <input type="text" name="firstname" required="required" id="efirstname">
+                    Price:
+                    <input type="text" name="lastname" required="required" id="elastname">
+                    Stock:
+                    <input type="email" name="email" required="required" id="eemail">
+
+                    <input type="submit" value="Edit">
+                </form>
+
+                <br>
+
+                <table style="width:80%">
+                    <tr>
+                        <th>Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>E-mail</th>
+                        
+                    </tr>
+                    <tbody id="clients">
+                    </tbody>
+                </table>
+
+                <script src="js/client.js">
+                    
+                </script>
+            </body>
+
+        </html>

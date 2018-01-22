@@ -6,40 +6,100 @@
         <meta charset="UTF-8" />
         <link type="text/css" href="css/styles.css" rel="stylesheet" />
     </head>
+
     <body>
-        <h1>Address</h1>
-       <ul>
-            <li><a href="/W3/">Home</a></li>
-            <li><a href="/W3/client.html">Client Information</a></li>
-            <li><a href="/W3/cheese.html">Cheeses</a></li>
-            <li><a href="/W3/address.html">Your Addresses</a></li>
-            <li><a href="/W3/account.html">Account Information</a></li>
-            <li><a href="/W3/orders.html">Orders</a></li>
-            <li><a href="/W3/rest/adminmain">Admin</a></li>
-            <li style="background:navy;"><a href="/account/add">Add Account</a></li>
-            <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
-            <li style="background:darkred;"><a>Logout</a></li>
-        </ul>
-        <a href="/W3/cheese/add">Add Cheese</a>
+        <style>
+            table, th, td {
+                border: 1px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                text-align: left;
 
-        <p id="demo"></p>
+            </style>
 
-        <!--
-    <script>
-        fetch('http://localhost:8080/W3/rest/cheese')
-                .then(function (response) {
-                    return response.json();
-                }
-                ).then(function (jsonData) {
+            <ul>
+                <li><a href="/W3/">Home</a></li>
+                <li><a href="/W3/client.html">Client Information</a></li>
+                <li><a href="/W3/cheese.html">Cheeses</a></li>
+                <li><a href="/W3/address.html">Your Addresses</a></li>
+                <li><a href="/W3/account.html">Account Information</a></li>
+                <li><a href="/W3/orders.html">Orders</a></li>
+                <li><a href="/W3/rest/adminmain">Admin</a></li>
+                <li style="background:navy;"><a onclick="gotomain()" href="javascript:void(0);">Add Account</a></li>
+                <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
+                <li style="background:darkred;"><a>Logout</a></li>
+            </ul>
+            <h1>Address</h1>
+            <br>
 
-            var text = "";
-            for (i = 0; i < jsonData.length; i++) {
-                text += jsonData[i].cheeseID + " " + jsonData[i].name + " " + jsonData[i].price + " " + jsonData[i].stock + "<br>";
-            }
-            document.getElementById("demo").innerHTML = text;
-        });
-    </script>*/
-</body>-->
-    </body>
+            <form onsubmit="create()" id="form"> 
+                Add new Address <br> 
+                Streetname:
+                <input type="text" name="streetname" required="required" id="streetname">
+                Housenumber:
+                <input type="number" name="housenumber" required="required" id="housenumber">
+                Housenumber Addition:
+                <input type="text" name="housenumberaddition"  id="housenumberaddition">
+                Postal Code:
+                <input type="text" name="postalcode" required="required" id="postalcode">
+                City:
+                <input type="text" name="city" required="required" id="city">
+                Client:
+                <input type="number" name="client" required="required" id="client">
+                Addresstype:
+                <select name="addresstype" id="addresstype" required="required">
+                    <option></option>
+                </select>   
+                <input type="submit" value="Add">
+            </form>
 
-</html>
+            <p id="demo"></p>
+
+            <form onsubmit="editor()" id="form2" style="display:none"> 
+                    Edit Address <br> 
+                    <input type="hidden" name="id" id="editid">
+                    Streetname:
+                    <input type="text" name="streetname" required="required" id="estreetname">
+                    Housenumber:
+                    <input type="number" name="housenumber" required="required" id="ehousenumber">
+                    Housenumber Addition:
+                    <input type="number" name="housenumberaddition"  id="ehousenumberaddition">
+                    Postal Code:
+                    <input type="text" name="postalcode" required="required" id="epostalcode">
+                    City:
+                    <input type="text" name="city" required="required" id="ecity">
+                    <input type="hidden" name="eaddresstype" id="eaddresstype">
+                    <input type="hidden" name="eclient" id="eclient">
+                    <input type="submit" value="Edit">
+                </form>
+
+                <br>
+
+                <table style="width:80%">
+                    <tr>
+                        <th>Id</th>
+                        <th>Streetname</th>
+                        <th>HouseNumber</th>
+                        <th>HouseNumberAddition</th>
+                        <th>Postal Code</th>
+                        <th>City</th>
+                    </tr>
+                    <tbody id="Addresses">
+                    </tbody>
+                </table>
+
+                <br>
+                <p id="demo2"></p>
+                <br>
+
+                <table style="width:80%">
+                    <tbody id="addresstypes">
+                    </tbody>
+                </table>
+
+                <script src="js/address.js">
+
+                </script>
+            </body>
+
+        </html>

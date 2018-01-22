@@ -5,18 +5,26 @@
  */
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,6 +43,9 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Client.findByFirstname", query = "SELECT c FROM Client c WHERE c.firstname = :firstname")
     , @NamedQuery(name = "Client.findByLastname", query = "SELECT c FROM Client c WHERE c.lastname = :lastname")
     , @NamedQuery(name = "Client.findByEmail", query = "SELECT c FROM Client c WHERE c.email = :email")})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "clientID")
 public class Client implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,11 +65,13 @@ public class Client implements Serializable {
     @Column(name = "Email")
     private String email;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientID")
+    @JsonIgnoreProperties("clientID")
     private Collection<Address> addressCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientID")
+    @JsonIgnoreProperties("clientID")
     private Collection<Orders> ordersCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clientID")
-    private Collection<Account> accountCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "clientID")
+    private Account account;
 
     public Client() {
     }
@@ -117,13 +130,12 @@ public class Client implements Serializable {
         this.ordersCollection = ordersCollection;
     }
 
-    @XmlTransient
-    public Collection<Account> getAccountCollection() {
-        return accountCollection;
+    public Account getAccount() {
+        return account;
     }
 
-    public void setAccountCollection(Collection<Account> accountCollection) {
-        this.accountCollection = accountCollection;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override
@@ -150,5 +162,5 @@ public class Client implements Serializable {
     public String toString() {
         return "entity.Client[ clientID=" + clientID + " ]";
     }
-    
+
 }
