@@ -51,7 +51,8 @@ public class OrdersREST {
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Orders entity) {
+    @Produces({MediaType.APPLICATION_JSON})
+    public Orders create(Orders entity) {
         Client client = new Client();
         client.setClientID(16);
         Date today=new Date();
@@ -61,6 +62,7 @@ public class OrdersREST {
         entity.setTotalprice("0");
         entity.setClientID(client);
         ordersdao.create(entity);
+        return entity;
     }
     
 

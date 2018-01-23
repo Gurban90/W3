@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Cheese;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -30,5 +31,6 @@ public class CheeseFacade extends AbstractFacade<Cheese> {
         super(Cheese.class);
     }
     
+      
 }
 

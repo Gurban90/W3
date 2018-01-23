@@ -52,8 +52,7 @@ public class Orderdetail implements Serializable {
     private Cheese cheeseID;
     @JoinColumn(name = "OrdersID", referencedColumnName = "OrdersID")
     @ManyToOne(optional = false)
-    @JsonIgnoreProperties("orderdetailCollection")
-        private Orders ordersID;
+    private Orders ordersID;
 
     public Orderdetail() {
     }

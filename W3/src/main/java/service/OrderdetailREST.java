@@ -19,6 +19,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import dao.OrderdetailFacade;
+import dao.OrdersFacade;
+import entity.Orders;
+import java.util.Collection;
 
 /**
  *
@@ -30,6 +33,9 @@ public class OrderdetailREST {
 
     @EJB
     private OrderdetailFacade orderdetaildao;
+
+    @EJB
+    private OrdersFacade orderdao;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
@@ -48,6 +54,11 @@ public class OrderdetailREST {
     @Consumes({MediaType.APPLICATION_JSON})
     public void create(Orderdetail entity) {
         orderdetaildao.create(entity);
+        Orders a = orderdao.find(entity.getOrdersID().getOrdersID());
+        Collection<Orderdetail> coll = a.getOrderdetailCollection();
+        coll.add(entity);
+        a.setOrderdetailCollection(coll);
+        orderdao.edit(a);
     }
 
     @PUT

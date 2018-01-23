@@ -15,7 +15,7 @@
                 padding: 5px;
                 text-align: left;
             </style>
-            
+
             <ul>
                 <li><a href="/W3/">Home</a></li>
                 <li><a href="/W3/client.html">Client Information</a></li>
@@ -28,51 +28,66 @@
                 <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
                 <li style="background:darkred;"><a>Logout</a></li>
             </ul>
-<h1>Orders</h1>
+            <h1>Orders</h1>
             <br>
-            
-            <button onclick="create()">Add</button>
+
+            <button onclick="create()">Add Order</button>
 
             <p id="demo"></p>
 
-            <form onsubmit="editor()" id="form2" style="display:none"> 
-                    Edit Cheese: <br> 
-                    <input type="hidden" name="id" id="editid">
-                    Name:
-                    <input type="text" name="name" required="required" id="editname">
-                    Price:
-                    <input type="number" name="price" placeholder="0.00" min="0" value="0" step="0.01" id="editprice">
-                    Stock:
-                    <input type="number" name="stock" required="required" id="editstock">
-
-                    <input type="submit" value="Edit">
+            <form onsubmit="check()" id="form" style="display:none"> 
+                    Add new OrderDetail <br> 
+                    OrderID
+                    <input type="number" name="orderid" id="orderid">
+                    Quantity
+                    <input type="text" name="quantity" required="required" id="quantity">
+                    Cheese:
+                    <select name="cheese" id="cheese" required="required">
+                        <option></option>
+                    </select> 
+                    <input type="submit" value="Add">
                 </form>
+            
+             <form onsubmit="edit()" id="form2" style="display:none"> 
+                    Add new OrderDetail <br> 
+                    OrderID
+                    <input type="number" name="orderid" id="orderid">
+                    Quantity
+                    <input type="text" name="quantity" required="required" id="quantity">
+                    Cheese:
+                    <select name="cheese" id="cheese" required="required">
+                        <option></option>
+                    </select> 
+                    <input type="submit" value="Add">
+                </form>
+
+
 
                 <br>
 
-                <table style="width:80%">
+                <table id="table1" style="width:80%">
                     <tr>
                         <th>Id</th>
                         <th>Order Date</th>
                         <th>Total Price</th>
                         <th>Delivery Date</th>
-                                               
+
                     </tr>
                     <tbody id="orders">
                     </tbody>
                 </table>
-                
-                  <br>
+
+                <br>
                 <p id="demo2"></p>
                 <br>
-                
-                  <table style="width:80%">
+
+                <table style="width:80%">
                     <tbody id="orderdetails">
                     </tbody>
                 </table>
 
                 <script src="js/orders.js">
-                    
+
                 </script>
             </body>
 

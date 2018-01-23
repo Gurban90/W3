@@ -7,6 +7,7 @@ package entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -61,7 +62,8 @@ public class Cheese implements Serializable {
     @Column(name = "Stock")
     private String stock;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cheeseID")
-        private Collection<Orderdetail> orderdetailCollection;
+    @JsonIgnore
+    private Collection<Orderdetail> orderdetailCollection;
 
     public Cheese() {
     }
