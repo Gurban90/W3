@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -59,9 +60,8 @@ public class Orders implements Serializable {
     @Column(name = "Currentdate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date currentdate;
-    @Size(max = 45)
     @Column(name = "Totalprice")
-    private String totalprice;
+    private BigDecimal totalprice;
     @Column(name = "Enddate")
     @Temporal(TemporalType.TIMESTAMP)
     private Date enddate;
@@ -96,13 +96,14 @@ public class Orders implements Serializable {
         this.currentdate = currentdate;
     }
 
-    public String getTotalprice() {
+    public BigDecimal getTotalprice() {
         return totalprice;
     }
 
-    public void setTotalprice(String totalprice) {
+    public void setTotalprice(BigDecimal totalprice) {
         this.totalprice = totalprice;
     }
+
 
     public Date getEnddate() {
         return enddate;

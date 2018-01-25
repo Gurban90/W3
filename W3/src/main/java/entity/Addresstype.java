@@ -36,9 +36,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Addresstype.findAll", query = "SELECT a FROM Addresstype a")
     , @NamedQuery(name = "Addresstype.findByAddresstypeID", query = "SELECT a FROM Addresstype a WHERE a.addresstypeID = :addresstypeID")
     , @NamedQuery(name = "Addresstype.findByTypename", query = "SELECT a FROM Addresstype a WHERE a.typename = :typename")})
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "addresstypeID")
 public class Addresstype implements Serializable {
 
     private static final long serialVersionUID = 1L;

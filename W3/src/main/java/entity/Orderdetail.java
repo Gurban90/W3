@@ -21,6 +21,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -35,8 +36,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Orderdetail.findByOrderdetailID", query = "SELECT o FROM Orderdetail o WHERE o.orderdetailID = :orderdetailID")
     , @NamedQuery(name = "Orderdetail.findByQuantity", query = "SELECT o FROM Orderdetail o WHERE o.quantity = :quantity")})
 @JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "orderdetailID")
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "orderdetailID")
 public class Orderdetail implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,6 +50,7 @@ public class Orderdetail implements Serializable {
     private Integer quantity;
     @JoinColumn(name = "CheeseID", referencedColumnName = "CheeseID")
     @ManyToOne(optional = false)
+    @JsonIgnoreProperties("orderdetailCollection")
     private Cheese cheeseID;
     @JoinColumn(name = "OrdersID", referencedColumnName = "OrdersID")
     @ManyToOne(optional = false)
@@ -117,5 +119,5 @@ public class Orderdetail implements Serializable {
     public String toString() {
         return "entity.Orderdetail[ orderdetailID=" + orderdetailID + " ]";
     }
-    
+
 }

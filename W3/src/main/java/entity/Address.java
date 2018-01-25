@@ -39,9 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Address.findByHousenumberAddition", query = "SELECT a FROM Address a WHERE a.housenumberAddition = :housenumberAddition")
     , @NamedQuery(name = "Address.findByPostalcode", query = "SELECT a FROM Address a WHERE a.postalcode = :postalcode")
     , @NamedQuery(name = "Address.findByCity", query = "SELECT a FROM Address a WHERE a.city = :city")})
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "addressID")
 public class Address implements Serializable {
  
     private static final long serialVersionUID = 1L;

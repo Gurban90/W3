@@ -1,12 +1,15 @@
+"use strict";
+
 fetch('http://localhost:8080/W3/rest/account')
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
     document.getElementById("demo").innerHTML = "To delete your account, go to client and click on delete next to your clientaccount.";
-    this.el = document.getElementById('accounts');
+    let el;
+    el = document.getElementById('accounts');
     var data = " ";
-    for (i = 0; i < jsonData.length; i++) {
+    for (var i = 0; i < jsonData.length; i++) {
         data += '<tr>';
         data += '<td>' + jsonData[i].accountID + '</td>' + '<td>' + jsonData[i].username + '</td>' + '<td>' + jsonData[i].password + '</td>' +
                 '<td>' + jsonData[i].theRole + '</td>';
@@ -14,7 +17,7 @@ fetch('http://localhost:8080/W3/rest/account')
         data += '<td><button onclick="edit(' + jsonData[i].accountID + ')">Edit</button></td>';
         data += '</tr>';
     }
-    return this.el.innerHTML = data;
+    return el.innerHTML = data;
 });
 
 function edit(id) {
@@ -24,7 +27,8 @@ function edit(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('accounts');
+                let el;
+        el = document.getElementById('accounts');
         var data = " ";
         var client = " ";
         if (jsonData.clientID === null) {
@@ -39,7 +43,7 @@ function edit(id) {
         data += '<td>' + jsonData.accountID + '</td>' + '<td>' + jsonData.username + '</td>' + '<td>' + jsonData.password + '</td>' +
                 '<td>' + jsonData.theRole + '</td>';
         data += '</tr>';
-        return this.el.innerHTML = data, document.getElementById('id').value = jsonData.accountID, document.getElementById('username').value = jsonData.username,
+        return el.innerHTML = data, document.getElementById('id').value = jsonData.accountID, document.getElementById('username').value = jsonData.username,
                 document.getElementById('password').value = jsonData.password, document.getElementById('role').value = jsonData.theRole,
                 document.getElementById('client').value = client;
     });
@@ -75,7 +79,8 @@ function view(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('accounts');
+                let el;
+        el = document.getElementById('accounts');
         var data = " ";
         document.getElementById("demo").innerHTML = "Details Account number: " + jsonData.accountID;
 
@@ -91,7 +96,7 @@ function view(id) {
                 '<td>' + jsonData.theRole + '</td>' + '<td>' + "Client : " + client + '</td>';
         data += '</tr>';
 
-        return this.el.innerHTML = data;
+        return el.innerHTML = data;
     });
 }
 

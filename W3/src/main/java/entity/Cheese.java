@@ -41,9 +41,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Cheese.findByName", query = "SELECT c FROM Cheese c WHERE c.name = :name")
     , @NamedQuery(name = "Cheese.findByPrice", query = "SELECT c FROM Cheese c WHERE c.price = :price")
     , @NamedQuery(name = "Cheese.findByStock", query = "SELECT c FROM Cheese c WHERE c.stock = :stock")})
-@JsonIdentityInfo(
-  generator = ObjectIdGenerators.PropertyGenerator.class, 
-  property = "cheeseID")
 public class Cheese implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,7 +59,6 @@ public class Cheese implements Serializable {
     @Column(name = "Stock")
     private String stock;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cheeseID")
-    @JsonIgnore
     private Collection<Orderdetail> orderdetailCollection;
 
     public Cheese() {
@@ -103,6 +99,7 @@ public class Cheese implements Serializable {
     public void setStock(String stock) {
         this.stock = stock;
     }
+   
 
     @XmlTransient
     public Collection<Orderdetail> getOrderdetailCollection() {
@@ -138,4 +135,4 @@ public class Cheese implements Serializable {
         return "entity.Cheese[ cheeseID=" + cheeseID + " ]";
     }
 
-}
+    }

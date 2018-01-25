@@ -1,11 +1,14 @@
+"use strict";
+
 fetch('http://localhost:8080/W3/rest/client')
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
-    this.el = document.getElementById('clients');
+    let el;
+    el = document.getElementById('clients');
     var data = " ";
-    for (i = 0; i < jsonData.length; i++) {
+    for (var i = 0; i < jsonData.length; i++) {
         data += '<tr>';
         data += '<td>' + jsonData[i].clientID + '</td>' + '<td>' + jsonData[i].firstname + '</td>' + '<td>' + jsonData[i].lastname + '</td>' + '<td>' + jsonData[i].email + '</td>';
         data += '<td><button onclick="view(' + jsonData[i].clientID + ')">View</button></td>';
@@ -13,7 +16,7 @@ fetch('http://localhost:8080/W3/rest/client')
         data += '<td><button onclick="remove(' + jsonData[i].clientID + ')">Delete</button></td>';
         data += '</tr>';
     }
-    return this.el.innerHTML = data;
+    return el.innerHTML = data;
 });
 
 function create() {
@@ -43,27 +46,28 @@ function remove(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('clients');
+        let el;
+        el = document.getElementById('clients');
         var data = " ";
 
         data += '<tr>';
         data += '<td>' + jsonData.clientID + '</td>' + '<td>' + jsonData.firstname + '</td>' + '<td>' + jsonData.lastname + '</td>' + '<td>' + jsonData.email + '</td>';
         data += '</tr>';
-       
-            document.getElementById("demo").innerHTML = "Delete Client with id: " + id + "? This will delete the whole account!";
 
-            var button = document.createElement("button");
-            button.innerHTML = "Delete";
-            document.getElementById("demo").appendChild(button);
-            button.addEventListener("click", function () {
-                fetch('http://localhost:8080/W3/rest/client' + '/' + id, {
-                    method: 'DELETE'
-                }).then(function () {
-                    window.location.replace("http://localhost:8080/W3/client.html");
-                });
+        document.getElementById("demo").innerHTML = "Delete Client with id: " + id + "? This will delete the whole account!";
+
+        var button = document.createElement("button");
+        button.innerHTML = "Delete";
+        document.getElementById("demo").appendChild(button);
+        button.addEventListener("click", function () {
+            fetch('http://localhost:8080/W3/rest/client' + '/' + id, {
+                method: 'DELETE'
+            }).then(function () {
+                window.location.replace("http://localhost:8080/W3/client.html");
             });
-            return this.el.innerHTML = data;
-        
+        });
+        return el.innerHTML = data;
+
     });
 }
 
@@ -80,13 +84,14 @@ function edit(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('clients');
+        let el;
+        el = document.getElementById('clients');
         var data = " ";
 
-          data += '<tr>';
+        data += '<tr>';
         data += '<td>' + jsonData.clientID + '</td>' + '<td>' + jsonData.firstname + '</td>' + '<td>' + jsonData.lastname + '</td>' + '<td>' + jsonData.email + '</td>';
         data += '</tr>';
-        return this.el.innerHTML = data, document.getElementById('efirstname').value = jsonData.firstname,
+        return el.innerHTML = data, document.getElementById('efirstname').value = jsonData.firstname,
                 document.getElementById('elastname').value = jsonData.lastname, document.getElementById('eemail').value = jsonData.email,
                 document.getElementById('editid').value = jsonData.clientID;
     });
@@ -120,18 +125,61 @@ function view(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('clients');
+        let el;
+        el = document.getElementById('clients');
         var data = " ";
-        document.getElementById("demo").innerHTML = "Details Client named: " + jsonData.clientID +" "+ jsonData.firstname +" "+ jsonData.lastname;
+        document.getElementById("demo").innerHTML = "Details Client named: " + jsonData.clientID + " " + jsonData.firstname + " " + jsonData.lastname;
 
         data += '<tr>';
         data += '<td>' + jsonData.clientID + '</td>' + '<td>' + jsonData.firstname + '</td>' + '<td>' + jsonData.lastname + '</td>' + '<td>' + jsonData.email + '</td>';
         data += '</tr>';
 
-        return this.el.innerHTML = data;
+        var tbody = document.getElementById('addresses');
+        var data2 = " ";
+        data2 += '<tr>';
+        data2 += '<th>' + 'AddressID' + '</th>' +
+                '<th>' + 'Streetname' + '</th>' +
+                '<th>' + 'Housenumber' + '</th>' +
+                '<th>' + 'HouseNumberAddition' + '</th>' +
+                '<th>' + 'Postal Code' + '</th>' +
+                '<th>' + 'City' + '</th>'+
+                '<th>' + 'Addresstype' + '</th>';
+
+        data2 += '</tr>';
+        for (var i = 0; i < jsonData.addressCollection.length; i++) {
+            data2 += '<tr>';
+            data2 += '<td>' + jsonData.addressCollection[i].addressID + '</td>' + '<td>' + jsonData.addressCollection[i].streetname + '</td>' +
+                    '<td>' + jsonData.addressCollection[i].housenumber + '</td>' + '<td>' + jsonData.addressCollection[i].housenumberAddition + '</td>' +
+                    '<td>' + jsonData.addressCollection[i].postalcode + '</td>' + '<td>' + jsonData.addressCollection[i].city + '</td>'+
+                    '<td>' + jsonData.addressCollection[i].addresstypeID.typename + '</td>';
+            data2 += '</tr>';
+        }
+       
+        var tbody3 = document.getElementById('orders');
+        var data3 = " ";
+        data3 += '<tr>';
+        data3 += '<th>' + 'OrdersID' + '</th>' +
+                '<th>' + 'Order Date' + '</th>' +
+                '<th>' + 'Total Price' + '</th>' +
+                '<th>' + 'End Date' + '</th>';
+
+
+        data3 += '</tr>';
+        for (var i = 0; i < jsonData.ordersCollection.length; i++) {
+            var x = new Date(jsonData.ordersCollection[i].currentdate).toLocaleDateString();
+            var y = new Date(jsonData.ordersCollection[i].enddate).toLocaleDateString();
+            data3 += '<tr>';
+            data3 += '<td>' + jsonData.ordersCollection[i].ordersID + '</td>' + '<td>' + x + '</td>' +
+                    '<td>' + jsonData.ordersCollection[i].totalprice + '</td>' + '<td>' + y + '</td>';
+            data3 += '</tr>';
+        }
+
+        return el.innerHTML = data, tbody.innerHTML = data2, tbody3.innerHTML = data3;
+
     });
 }
 
-function gotomain(){
+function gotomain() {
     document.getElementById("demo").innerHTML = "Go to the main menu to add an account!";
-};
+}
+;

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package rest;
 
 import entity.Address;
 import java.util.List;
@@ -63,7 +63,6 @@ public class AddressREST {
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Address entity) {
-        System.out.println(entity.getCity());
         Client client = clientdao.find(entity.getClientID().getClientID());
         Addresstype addresstype = addresstypedao.find(entity.getAddresstypeID().getAddresstypeID());
         entity.setAddresstypeID(addresstype);

@@ -1,21 +1,25 @@
+"use strict";
+
 fetch('http://localhost:8080/W3/rest/orders')
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
-
-    this.el = document.getElementById('orders');
+    let el;
+    el = document.getElementById('orders');
     var data = " ";
-    for (i = 0; i < jsonData.length; i++) {
+    for (var i = 0; i < jsonData.length; i++) {
+        var x = new Date(jsonData[i].currentdate).toLocaleDateString();
+        var y = new Date(jsonData[i].enddate).toLocaleDateString();
         data += '<tr>';
-        data += '<td>' + jsonData[i].ordersID + '</td>' + '<td>' + jsonData[i].currentdate + '</td>' + '<td>' + jsonData[i].totalprice + '</td>' +
-                '<td>' + jsonData[i].enddate + '</td>';
+        data += '<td>' + jsonData[i].ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData[i].totalprice + '</td>' +
+                '<td>' + y + '</td>';
         data += '<td><button onclick="view(' + jsonData[i].ordersID + ')">View</button></td>';
         data += '<td><button onclick="remove(' + jsonData[i].ordersID + ')">Delete</button></td>';
         data += '<td><button onclick="createdetail(' + jsonData[i].ordersID + ')">Add</button></td>';
         data += '</tr>';
     }
-    return this.el.innerHTML = data;
+    return el.innerHTML = data;
 });
 
 function create() {
@@ -50,18 +54,21 @@ function createdetail(orderid) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('orders');
+        
+        let el;
+        el = document.getElementById('orders');
         var data = " ";
-
+        let x = new Date(jsonData.currentdate).toLocaleDateString();
+        let y = new Date(jsonData.enddate).toLocaleDateString();
         data += '<tr>';
-        data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + jsonData.currentdate + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
-                '<td>' + jsonData.enddate + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
+        data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
+                '<td>' + y + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
         data += '</tr>';
-        return this.el.innerHTML = data;
+        return el.innerHTML = data;
     });
 
     document.getElementById('form').style.display = 'block';
-    
+
 
 
     fetch('http://localhost:8080/W3/rest/cheese')
@@ -85,7 +92,6 @@ function createdetail(orderid) {
 
 function check() {
     var h = document.getElementById("quantity").value;
-    var y = document.getElementById("cheese").value;
     var z = document.getElementById("orderid").value;
     fetch('http://localhost:8080/W3/rest/orders' + '/' + document.getElementById("orderid").value)
             .then(function (response) {
@@ -125,7 +131,6 @@ function finalize(h, y, z) {
         window.location.replace("http://localhost:8080/W3/orders.html");
     });
 
-
 }
 ;
 
@@ -135,12 +140,14 @@ function remove(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('orders');
+        let el;
+        el = document.getElementById('orders');
         var data = " ";
-
+        var x = new Date(jsonData.currentdate).toLocaleDateString();
+        var y = new Date(jsonData.enddate).toLocaleDateString();
         data += '<tr>';
-        data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + jsonData.currentdate + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
-                '<td>' + jsonData.enddate + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
+        data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
+                '<td>' + y + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
         data += '</tr>';
 
 
@@ -156,7 +163,7 @@ function remove(id) {
                 window.location.replace("http://localhost:8080/W3/orders.html");
             });
         });
-        return this.el.innerHTML = data;
+        return el.innerHTML = data;
 
 
     });
@@ -168,14 +175,16 @@ function view(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('orders');
+        let el;
+        el = document.getElementById('orders');
         var data = " ";
         document.getElementById("demo").innerHTML = "Details Order number: " + jsonData.ordersID;
         document.getElementById("demo2").innerHTML = "OrderDetails";
-
+        var x = new Date(jsonData.currentdate).toLocaleDateString();
+        var y = new Date(jsonData.enddate).toLocaleDateString();
         data += '<tr>';
-        data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + jsonData.currentdate + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
-                '<td>' + jsonData.enddate + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
+        data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
+                '<td>' + y + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
         data += '</tr>';
 
         var tbody = document.getElementById('orderdetails');
@@ -183,11 +192,11 @@ function view(id) {
         data2 += '<tr>';
         data2 += '<th>' + 'OrderDetailID' + '</th>' +
                 '<th>' + 'Quantity' + '</th>' +
-                '<th>' + 'CheeseID' + '</th>';
-        '<th>' + 'CheeseName' + '</th>';
-        '<th>' + 'PPU' + '</th>';
+                '<th>' + 'CheeseID' + '</th>' +
+                '<th>' + 'CheeseName' + '</th>' +
+                '<th>' + 'PPU' + '</th>';
         data2 += '</tr>';
-        for (i = 0; i < jsonData.orderdetailCollection.length; i++) {
+        for (var i = 0; i < jsonData.orderdetailCollection.length; i++) {
             data2 += '<tr>';
             data2 += '<td>' + jsonData.orderdetailCollection[i].orderdetailID + '</td>' + '<td>' + jsonData.orderdetailCollection[i].quantity + '</td>' +
                     '<td>' + jsonData.orderdetailCollection[i].cheeseID.cheeseID + '</td>' + '<td>' + jsonData.orderdetailCollection[i].cheeseID.name + '</td>' +
@@ -196,7 +205,7 @@ function view(id) {
             data2 += '<td><button onclick="remove2(' + jsonData.orderdetailCollection[i].orderdetailID + ')">Delete</button></td>';
             data2 += '</tr>';
         }
-        return this.el.innerHTML = data, tbody.innerHTML = data2;
+        return el.innerHTML = data, tbody.innerHTML = data2;
 
     });
 }
@@ -213,9 +222,9 @@ function remove2(detailid) {
         data2 += '<tr>';
         data2 += '<th>' + 'OrderDetailID' + '</th>' +
                 '<th>' + 'Quantity' + '</th>' +
-                '<th>' + 'CheeseID' + '</th>';
-        '<th>' + 'CheeseName' + '</th>';
-        '<th>' + 'PPU' + '</th>';
+                '<th>' + 'CheeseID' + '</th>' +
+                '<th>' + 'CheeseName' + '</th>' +
+                '<th>' + 'PPU' + '</th>';
         data2 += '</tr>';
 
         data2 += '<tr>';
@@ -240,6 +249,59 @@ function remove2(detailid) {
 
     });
 }
+
+function edit2(id) {
+    document.getElementById("form").innerHTML = " ";
+    document.getElementById("demo").innerHTML = "Edit quantity?";
+    document.getElementById('form2').style.display = 'block';
+
+
+    fetch('http://localhost:8080/W3/rest/orderdetail' + '/' + id)
+            .then(function (response) {
+                return response.json();
+            }
+            ).then(function (jsonData) {
+        var tbody = document.getElementById('orderdetails');
+        var data2 = " ";
+        data2 += '<tr>';
+        data2 += '<th>' + 'OrderDetailID' + '</th>' +
+                '<th>' + 'Quantity' + '</th>' +
+                '<th>' + 'CheeseID' + '</th>' +
+                '<th>' + 'CheeseName' + '</th>' +
+                '<th>' + 'PPU' + '</th>';
+        data2 += '</tr>';
+
+        data2 += '<tr>';
+        data2 += '<td>' + jsonData.orderdetailID + '</td>' + '<td>' + jsonData.quantity + '</td>' + '<td>' + jsonData.cheeseID.cheeseID + '</td>' +
+                '<td>' + jsonData.cheeseID.name + '</td>' + '<td>' + jsonData.cheeseID.price + '</td>';
+        data2 += '</tr>';
+
+        return tbody.innerHTML = data2, document.getElementById('orderdetailid').value = jsonData.orderdetailID,
+                document.getElementById('orderidedit').value = jsonData.ordersID.ordersID, document.getElementById('equantity').value = jsonData.quantity,
+                document.getElementById('echeese').value = jsonData.cheeseID.cheeseID;
+    });
+}
+;
+
+function editor() {
+    var aa = document.getElementById("orderdetailid").value;
+    var bb = document.getElementById("equantity").value;
+    var cc = document.getElementById("echeese").value;
+    var dd = document.getElementById("orderidedit").value;
+    var orderdetailedit = {orderdetailID: aa, quantity: bb, cheeseID: {"cheeseID": cc},
+        ordersID: {"ordersID": dd}};
+    fetch('http://localhost:8080/W3/rest/orderdetail', {
+        method: 'PUT',
+        body: JSON.stringify(orderdetailedit),
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+        }
+    }).then(function () {
+        window.location.replace("http://localhost:8080/W3/orders.html");
+    });
+}
+;
 
 function gotomain() {
     document.getElementById("demo").innerHTML = "Go to the main menu to add an account!";

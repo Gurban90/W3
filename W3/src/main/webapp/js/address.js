@@ -1,11 +1,14 @@
+"use strict";
+
 fetch('http://localhost:8080/W3/rest/address')
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
-        this.el = document.getElementById('Addresses');
+            let el;
+        el = document.getElementById('Addresses');
     var data = " ";
-    for (i = 0; i < jsonData.length; i++) {
+    for (var i = 0; i < jsonData.length; i++) {
         data += '<tr>';
         data += '<td>' + jsonData[i].addressID + '</td>' + '<td>' + jsonData[i].streetname + '</td>' + '<td>' + jsonData[i].housenumber + '</td>' +
                 '<td>' + jsonData[i].housenumberAddition + '</td>' + '<td>' + jsonData[i].postalcode + '</td>' + '<td>' + jsonData[i].city + '</td>';              
@@ -14,7 +17,7 @@ fetch('http://localhost:8080/W3/rest/address')
         data += '<td><button onclick="remove(' + jsonData[i].addressID + ')">Delete</button></td>';
         data += '</tr>';
     }
-    return this.el.innerHTML = data;
+    return el.innerHTML = data;
 });
 
 fetch('http://localhost:8080/W3/rest/addresstype')
@@ -25,7 +28,7 @@ fetch('http://localhost:8080/W3/rest/addresstype')
     var select = document.getElementById("addresstype");
     for (var i = 0; i < jsonData.length; i++) {
         var opt = jsonData[i].addresstypeID;
-        var opttext = jsonData[i].typename;
+        let opttext = jsonData[i].typename;
         var el = document.createElement("option");
         el.textContent = opttext;
         el.value = opt;
@@ -67,7 +70,8 @@ function remove(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('Addresses');
+                let el;
+        el = document.getElementById('Addresses');
         var data = " ";
 
         data += '<tr>';
@@ -89,7 +93,7 @@ function remove(id) {
                 window.location.replace("http://localhost:8080/W3/address.html");
             });
         });
-        return this.el.innerHTML = data;
+        return el.innerHTML = data;
 
 
     });
@@ -107,7 +111,8 @@ function edit(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('Addresses');
+                let el;
+        el = document.getElementById('Addresses');
         var data = " ";
 
         data += '<tr>';
@@ -115,7 +120,7 @@ function edit(id) {
                 '<td>' + jsonData.housenumberAddition + '</td>' + '<td>' + jsonData.postalcode + '</td>' + '<td>' + jsonData.city + '</td>' +
                 '<td>' + "ClientID: " + jsonData.clientID.clientID + '</td>';
         data += '</tr>';
-        return this.el.innerHTML = data, document.getElementById('estreetname').value = jsonData.streetname, document.getElementById('ehousenumber').value = jsonData.housenumber,
+        return el.innerHTML = data, document.getElementById('estreetname').value = jsonData.streetname, document.getElementById('ehousenumber').value = jsonData.housenumber,
                 document.getElementById('ehousenumberaddition').value = jsonData.housenumberAddition, document.getElementById('epostalcode').value = jsonData.postalcode,
                 document.getElementById('ecity').value = jsonData.city, document.getElementById('eaddresstype').value = jsonData.addresstypeID.addresstypeID,
                 document.getElementById('eclient').value = jsonData.clientID.clientID,
@@ -158,7 +163,8 @@ function view(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('Addresses');
+                let el;
+       el = document.getElementById('Addresses');
         var data = " ";
         document.getElementById("demo").innerHTML = "Details Address number: " + jsonData.addressID;
         document.getElementById("demo2").innerHTML = "AddressType";
@@ -176,7 +182,7 @@ function view(id) {
         data2 += '<td>' + "AddressType" + '</td>' + '<td>' + "ID : " + jsonData.addresstypeID.addresstypeID + '</td>' + '<td>' + jsonData.addresstypeID.typename + '</td>';
         data2 += '</tr>';
 
-        return this.el.innerHTML = data, tbody.innerHTML = data2;
+        return el.innerHTML = data, tbody.innerHTML = data2;
         
     });
 }

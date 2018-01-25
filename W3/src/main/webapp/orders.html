@@ -40,7 +40,7 @@
                     OrderID
                     <input type="number" name="orderid" id="orderid">
                     Quantity
-                    <input type="text" name="quantity" required="required" id="quantity">
+                    <input type="number" name="quantity" id="quantity" required="required">
                     Cheese:
                     <select name="cheese" id="cheese" required="required">
                         <option></option>
@@ -48,21 +48,17 @@
                     <input type="submit" value="Add">
                 </form>
             
-             <form onsubmit="edit()" id="form2" style="display:none"> 
-                    Add new OrderDetail <br> 
-                    OrderID
-                    <input type="number" name="orderid" id="orderid">
+             <form onsubmit="editor()" id="form2" style="display:none"> 
+                    Edit OrderDetail <br> 
+                    <input type="hidden" name="orderdetailid" id="orderdetailid">
+                    <input type="hidden" name="orderidedit" id="orderidedit">
                     Quantity
-                    <input type="text" name="quantity" required="required" id="quantity">
-                    Cheese:
-                    <select name="cheese" id="cheese" required="required">
-                        <option></option>
-                    </select> 
-                    <input type="submit" value="Add">
+                    <input type="number" name="equantity" id="equantity" required="required">
+                    <input type="hidden" name="echeese" id="echeese">
+                    <input type="submit" value="Edit">
                 </form>
-
-
-
+            
+            
                 <br>
 
                 <table id="table1" style="width:80%">

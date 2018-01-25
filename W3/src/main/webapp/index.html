@@ -21,20 +21,19 @@
         <h1>Main Menu</h1>
         <br></br>
         
-        <form onsubmit="creator()" id="form" style="display:none"> 
+        <form id="form" style="display:none"> 
                 Add new Account <br> 
                 <br>
                 Username:
                 <input type="text" name="username" required="required" id="username">
                 Password:
                 <input type="password" name="password" required="required" id="password">
-                <input type="submit" value="Add">
+                <input type="button" value="Add" id="submit" onclick="check()">
+                
             </form>
         
         <p>Welcome to the world of Cheese!</p>
         <p><img src="css/Cheese.jpg" alt="Cheese" /></p>
-          <script src="js/index.js">
-                    
-                </script>
+          <script src="js/index.js"></script>
     </body>
 </html>

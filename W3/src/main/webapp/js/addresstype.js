@@ -1,11 +1,14 @@
+"use strict";
+
 fetch('http://localhost:8080/W3/rest/addresstype')
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
-    this.el = document.getElementById('addresstypes');
+            let el;
+    el = document.getElementById('addresstypes');
     var data = " ";
-    for (i = 0; i < jsonData.length; i++) {
+    for (var i = 0; i < jsonData.length; i++) {
         data += '<tr>';
         data += '<td>' + jsonData[i].addresstypeID + '</td>' + '<td>' + jsonData[i].typename + '</td>';
         data += '<td><button onclick="view(' + jsonData[i].addresstypeID + ')">View</button></td>';
@@ -13,7 +16,7 @@ fetch('http://localhost:8080/W3/rest/addresstype')
         data += '<td><button onclick="remove(' + jsonData[i].addresstypeID + ')">Delete</button></td>';
         data += '</tr>';
     }
-    return this.el.innerHTML = data;
+    return el.innerHTML = data;
 });
 
 function create() {
@@ -39,7 +42,8 @@ function remove(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('addresstypes');
+                let el;
+        el = document.getElementById('addresstypes');
         var data = " ";
 
         data += '<tr>';
@@ -59,7 +63,7 @@ function remove(id) {
                     window.location.replace("http://localhost:8080/W3/addresstype.html");
                 });
             });
-            return this.el.innerHTML = data;
+            return el.innerHTML = data;
         } else {
             var data = " ";
             document.getElementById("demo").innerHTML = "Cannot delete addresstyp, it is currently in use.";
@@ -81,13 +85,14 @@ function edit(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('addresstypes');
+                let el;
+        el = document.getElementById('addresstypes');
         var data = " ";
 
         data += '<tr>';
         data += '<td>' + jsonData.addresstypeID + '</td>' + '<td>' + jsonData.typename + '</td>';
         data += '</tr>';
-        return this.el.innerHTML = data, document.getElementById('edittypename').value = jsonData.typename,
+        return el.innerHTML = data, document.getElementById('edittypename').value = jsonData.typename,
                 document.getElementById('editid').value = jsonData.addresstypeID;
     });
 }
@@ -118,7 +123,8 @@ function view(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('addresstypes');
+                let el;
+        el = document.getElementById('addresstypes');
         var data = " ";
         document.getElementById("demo").innerHTML = "Details Addresstype named: " + jsonData.typename;
 
@@ -126,7 +132,7 @@ function view(id) {
         data += '<td>' + jsonData.addresstypeID + '</td>' + '<td>' + jsonData.typename + '</td>';
         data += '</tr>';
 
-        return this.el.innerHTML = data;
+        return el.innerHTML = data;
     });
 }
 

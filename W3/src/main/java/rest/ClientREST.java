@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package rest;
 
-import entity.Cheese;
+import entity.Client;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -18,51 +18,49 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import dao.CheeseFacade;
-import java.math.BigDecimal;
+import dao.ClientFacade;
 
 /**
  *
  * @author Gerben
  */
-@Path("/cheese")
+@Path("/client")
 @Stateless
-public class CheeseREST {
+public class ClientREST {
 
     @EJB
-    private CheeseFacade cheesedao;
+    private ClientFacade clientdao;
 
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Cheese> findAll() {
-        System.out.println(cheesedao.findAll());
-        return cheesedao.findAll();
+    public List<Client> findAll() {
+        return clientdao.findAll();
     }
 
     @GET
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Cheese find(@PathParam("id") Integer id) {
-        return cheesedao.find(id);
+    public Client find(@PathParam("id") Integer id) {
+        return clientdao.find(id);
     }
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Cheese entity) {
-        cheesedao.create(entity);
+    public void create(Client entity) {
+        clientdao.create(entity);
     }
 
     @PUT
     @Consumes({MediaType.APPLICATION_JSON})
-    public void edit(Cheese entity) {
-        cheesedao.edit(entity);
+    public void edit(Client entity) {
+        clientdao.edit(entity);
     }
 
     @DELETE
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {
-        cheesedao.remove(cheesedao.find(id));
+        clientdao.remove(clientdao.find(id));
     }
 
 }

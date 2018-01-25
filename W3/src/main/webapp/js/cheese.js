@@ -1,11 +1,14 @@
+"use strict";
+
 fetch('http://localhost:8080/W3/rest/cheese')
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
-    this.el = document.getElementById('cheeses');
+    let el;
+    el = document.getElementById('cheeses');
     var data = " ";
-    for (i = 0; i < jsonData.length; i++) {
+    for (var i = 0; i < jsonData.length; i++) {
         data += '<tr>';
         data += '<td>' + jsonData[i].cheeseID + '</td>' + '<td>' + jsonData[i].name + '</td>' + '<td>' + jsonData[i].price + '</td>' + '<td>' + jsonData[i].stock + '</td>';
         data += '<td><button onclick="view(' + jsonData[i].cheeseID + ')">View</button></td>';
@@ -13,7 +16,7 @@ fetch('http://localhost:8080/W3/rest/cheese')
         data += '<td><button onclick="remove(' + jsonData[i].cheeseID + ')">Delete</button></td>';
         data += '</tr>';
     }
-    return this.el.innerHTML = data;
+    return el.innerHTML = data;
 });
 
 function create() {
@@ -43,7 +46,8 @@ function remove(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('cheeses');
+                let el;
+        el = document.getElementById('cheeses');
         var data = " ";
 
         data += '<tr>';
@@ -63,7 +67,7 @@ function remove(id) {
                     window.location.replace("http://localhost:8080/W3/cheese.html");
                 });
             });
-            return this.el.innerHTML = data;
+            return el.innerHTML = data;
         } else {
             var data = " ";
             document.getElementById("demo").innerHTML = "Cannot delete cheese, it is currently in use.";
@@ -84,13 +88,14 @@ function edit(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('cheeses');
+                let el;
+        el = document.getElementById('cheeses');
         var data = " ";
 
         data += '<tr>';
         data += '<td>' + jsonData.cheeseID + '</td>' + '<td>' + jsonData.name + '</td>' + '<td>' + jsonData.price + '</td>' + '<td>' + jsonData.stock + '</td>';
         data += '</tr>';
-        return this.el.innerHTML = data, document.getElementById('editname').value = jsonData.name,
+        return el.innerHTML = data, document.getElementById('editname').value = jsonData.name,
                 document.getElementById('editprice').value = jsonData.price, document.getElementById('editstock').value = jsonData.stock,
                 document.getElementById('editid').value = jsonData.cheeseID;
     });
@@ -124,7 +129,8 @@ function view(id) {
                 return response.json();
             }
             ).then(function (jsonData) {
-        this.el = document.getElementById('cheeses');
+                let el;
+        el = document.getElementById('cheeses');
         var data = " ";
         document.getElementById("demo").innerHTML = "Details Cheese named: " + jsonData.name;
 
@@ -132,10 +138,11 @@ function view(id) {
         data += '<td>' + jsonData.cheeseID + '</td>' + '<td>' + jsonData.name + '</td>' + '<td>' + jsonData.price + '</td>' + '<td>' + jsonData.stock + '</td>';
         data += '</tr>';
 
-        return this.el.innerHTML = data;
+        return el.innerHTML = data;
     });
 }
 
-function gotomain(){
+function gotomain() {
     document.getElementById("demo").innerHTML = "Go to the main menu to add an account!";
-};
+}
+;
