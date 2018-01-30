@@ -1,5 +1,5 @@
 function login() {
-    alert("login js");
+    
     var a = document.getElementById("username").value;
     var b = document.getElementById("password").value;
 
@@ -16,9 +16,9 @@ function login() {
         return response.text();
     }
     ).then(function (text) {
-        window.location.replace("http://localhost:8080/W3/index.html");
-        return alert(text);///////////////////////////////////////////
+        return window.sessionStorage.accessToken = text, window.location.replace("http://localhost:8080/W3/index.html"); 
         
+                
     });
 }
 ;

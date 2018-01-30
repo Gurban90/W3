@@ -32,7 +32,7 @@ import org.jasypt.util.password.BasicPasswordEncryptor;
 @Stateless
 public class AuthenticationREST {
 
-    private static final Key key = generateKey();
+    public static final Key key = generateKey();
 
     @EJB
     private AccountFacade accountdao;
@@ -76,7 +76,8 @@ public class AuthenticationREST {
 
         String compactJws = Jwts.builder()
                 .setSubject(account.getTheRole())
-                .setId(username)
+                .setId(account.getAccountID().toString())
+                .setIssuer(username)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, key)
                 .compact();

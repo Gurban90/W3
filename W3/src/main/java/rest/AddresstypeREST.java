@@ -32,6 +32,7 @@ public class AddresstypeREST {
     private AddresstypeFacade addresstypedao;
 
     @GET
+    @Secured
     @Produces({MediaType.APPLICATION_JSON})
     public List<Addresstype> findAll() {
         return addresstypedao.findAll();

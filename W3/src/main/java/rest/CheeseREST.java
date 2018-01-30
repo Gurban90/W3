@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import dao.CheeseFacade;
+import security.User;
 
 /**
  *
@@ -30,10 +31,14 @@ public class CheeseREST {
 
     @EJB
     private CheeseFacade cheesedao;
+    
+    private User user =  new User();
 
     @GET
+    @Secured
     @Produces({MediaType.APPLICATION_JSON})
     public List<Cheese> findAll() {
+        System.out.println(user.getUserName());
         return cheesedao.findAll();
     }
 
