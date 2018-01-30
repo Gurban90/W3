@@ -8,6 +8,7 @@ package dao;
 import entity.Account;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -28,5 +29,12 @@ public class AccountFacade extends AbstractFacade<Account> {
     public AccountFacade() {
         super(Account.class);
     }
+           
+    public Object findByUsername(String username) {
+     return getEntityManager().createQuery("SELECT a FROM Account a WHERE a.username = :accUsername")
+             .setParameter("accUsername", username)
+             .getSingleResult();
     
+            }
+
 }
