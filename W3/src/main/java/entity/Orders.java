@@ -104,7 +104,6 @@ public class Orders implements Serializable {
         this.totalprice = totalprice;
     }
 
-
     public Date getEnddate() {
         return enddate;
     }
@@ -113,6 +112,7 @@ public class Orders implements Serializable {
         this.enddate = enddate;
     }
 
+    @XmlTransient
     public Client getClientID() {
         return clientID;
     }
@@ -121,7 +121,6 @@ public class Orders implements Serializable {
         this.clientID = clientID;
     }
 
-    @XmlTransient
     public Collection<Orderdetail> getOrderdetailCollection() {
         return orderdetailCollection;
     }

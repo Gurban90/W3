@@ -5,12 +5,13 @@
  */
 package entity;
 
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Addresstype.findAll", query = "SELECT a FROM Addresstype a")
     , @NamedQuery(name = "Addresstype.findByAddresstypeID", query = "SELECT a FROM Addresstype a WHERE a.addresstypeID = :addresstypeID")
     , @NamedQuery(name = "Addresstype.findByTypename", query = "SELECT a FROM Addresstype a WHERE a.typename = :typename")})
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "orderdetailID")
 public class Addresstype implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,7 +53,7 @@ public class Addresstype implements Serializable {
     private String typename;
     @OneToMany(mappedBy = "addresstypeID")
     @JsonIgnoreProperties("addresstypeID")
-    private Collection<Address> addressCollection;
+    private List<Address> addressCollection;
 
     public Addresstype() {
     }
@@ -75,11 +79,11 @@ public class Addresstype implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Address> getAddressCollection() {
+     public List<Address> getAddressCollection() {
         return addressCollection;
     }
 
-    public void setAddressCollection(Collection<Address> addressCollection) {
+    public void setAddressCollection(List<Address> addressCollection) {
         this.addressCollection = addressCollection;
     }
 
@@ -89,6 +93,8 @@ public class Addresstype implements Serializable {
         hash += (addresstypeID != null ? addresstypeID.hashCode() : 0);
         return hash;
     }
+
+   
 
     @Override
     public boolean equals(Object object) {

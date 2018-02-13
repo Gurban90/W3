@@ -1,10 +1,22 @@
 "use strict";
 
-fetch('http://localhost:8080/W3/rest/cheese')
+let token = localStorage.getItem("token");
+
+fetch('http://localhost:8080/W3/rest/cheese', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
+
+    if (jsonData.length < 1) {
+        document.getElementById('form').style.display = 'none';
+    }
     let el;
     el = document.getElementById('cheeses');
     var data = " ";
@@ -19,6 +31,33 @@ fetch('http://localhost:8080/W3/rest/cheese')
     return el.innerHTML = data;
 });
 
+fetch('http://localhost:8080/W3/rest/cheese/client', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
+        .then(function (response) {
+            return response.json();
+        }
+        ).then(function (jsonData) {
+
+    let el;
+    el = document.getElementById('cheeses');
+    var data = " ";
+    for (var i = 0; i < jsonData.length; i++) {
+        data += '<tr>';
+        data += '<td>' + jsonData[i].cheeseID + '</td>' + '<td>' + jsonData[i].name + '</td>' + '<td>' + jsonData[i].price + '</td>' + '<td>' + jsonData[i].stock + '</td>';
+        data += '<td><button onclick="view(' + jsonData[i].cheeseID + ')">View</button></td>';
+        data += '</tr>';
+    }
+    return el.innerHTML = data;
+});
+
+
+
+
 function create() {
     var a = document.getElementById("name").value;
     var b = document.getElementById("price").value;
@@ -30,6 +69,7 @@ function create() {
         body: JSON.stringify(cheese),
         headers: {
             'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
             'Content-Type': 'application/json'
         }
     }).then(function () {
@@ -41,12 +81,19 @@ function create() {
 function remove(id) {
     document.getElementById("form").innerHTML = " ";
 
-    fetch('http://localhost:8080/W3/rest/cheese' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/cheese' + '/' + id,
+            {
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Authorization': "Bearer " + token,
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(function (response) {
                 return response.json();
             }
             ).then(function (jsonData) {
-                let el;
+        let el;
         el = document.getElementById('cheeses');
         var data = " ";
 
@@ -62,10 +109,16 @@ function remove(id) {
             document.getElementById("demo").appendChild(button);
             button.addEventListener("click", function () {
                 fetch('http://localhost:8080/W3/rest/cheese' + '/' + id, {
-                    method: 'DELETE'
-                }).then(function () {
-                    window.location.replace("http://localhost:8080/W3/cheese.html");
-                });
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json, text/plain, */*',
+                        'Authorization': "Bearer " + token,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                        .then(function () {
+                            window.location.replace("http://localhost:8080/W3/cheese.html");
+                        });
             });
             return el.innerHTML = data;
         } else {
@@ -83,12 +136,19 @@ function edit(id) {
     document.getElementById('form2').style.display = 'block';
 
 
-    fetch('http://localhost:8080/W3/rest/cheese' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/cheese' + '/' + id,
+            {
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Authorization': "Bearer " + token,
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(function (response) {
                 return response.json();
             }
             ).then(function (jsonData) {
-                let el;
+        let el;
         el = document.getElementById('cheeses');
         var data = " ";
 
@@ -113,6 +173,7 @@ function editor() {
         body: JSON.stringify(cheese),
         headers: {
             'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
             'Content-Type': 'application/json'
         }
     }).then(function () {
@@ -124,12 +185,19 @@ function editor() {
 
 function view(id) {
     document.getElementById("form").innerHTML = " ";
-    fetch('http://localhost:8080/W3/rest/cheese' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/cheese' + '/' + id,
+            {
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Authorization': "Bearer " + token,
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(function (response) {
                 return response.json();
             }
             ).then(function (jsonData) {
-                let el;
+        let el;
         el = document.getElementById('cheeses');
         var data = " ";
         document.getElementById("demo").innerHTML = "Details Cheese named: " + jsonData.name;

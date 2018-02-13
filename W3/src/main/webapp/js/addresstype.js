@@ -1,10 +1,22 @@
 "use strict";
 
-fetch('http://localhost:8080/W3/rest/addresstype')
+let token = localStorage.getItem("token");
+
+fetch('http://localhost:8080/W3/rest/addresstype/client', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
+             if (jsonData.length < 1) {
+        document.getElementById('form').style.display = 'none';
+    }
+            
             let el;
     el = document.getElementById('addresstypes');
     var data = " ";
@@ -26,10 +38,11 @@ function create() {
     fetch('http://localhost:8080/W3/rest/addresstype', {
         method: 'POST',
         body: JSON.stringify(addresstype),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
+         headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
     }).then(function () {
         window.location.replace("http://localhost:8080/W3/addresstype.html");
     });
@@ -37,7 +50,13 @@ function create() {
 
 function remove(id) {
     document.getElementById("form").innerHTML = " ";
-    fetch('http://localhost:8080/W3/rest/addresstype' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/addresstype' + '/' + id, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -58,7 +77,12 @@ function remove(id) {
             document.getElementById("demo").appendChild(button);
             button.addEventListener("click", function () {
                 fetch('http://localhost:8080/W3/rest/addresstype' + '/' + id, {
-                    method: 'DELETE'
+                    method: 'DELETE',
+                     headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
                 }).then(function () {
                     window.location.replace("http://localhost:8080/W3/addresstype.html");
                 });
@@ -80,7 +104,13 @@ function edit(id) {
     document.getElementById('form2').style.display = 'block';
 
 
-    fetch('http://localhost:8080/W3/rest/addresstype' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/addresstype' + '/' + id, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -105,10 +135,11 @@ function editor() {
         fetch('http://localhost:8080/W3/rest/addresstype', {
         method: 'PUT',
         body: JSON.stringify(addresstype),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
+         headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
     }).then(function () {
         window.location.replace("http://localhost:8080/W3/addresstype.html");
     });
@@ -118,7 +149,13 @@ function editor() {
 
 function view(id) {
     document.getElementById("form").innerHTML = " ";
-    fetch('http://localhost:8080/W3/rest/addresstype' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/addresstype' + '/' + id, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }

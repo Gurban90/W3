@@ -23,6 +23,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -86,7 +87,7 @@ public class Orderdetail implements Serializable {
     public void setCheeseID(Cheese cheeseID) {
         this.cheeseID = cheeseID;
     }
-
+    @XmlTransient
     public Orders getOrdersID() {
         return ordersID;
     }

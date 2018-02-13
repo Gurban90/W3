@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package service;
+package security;
 
-import dao.OrdersFacade;
 import java.util.Calendar;
 import java.util.Date;
-import javax.ejb.EJB;
 
 /**
  *
@@ -30,8 +28,5 @@ public class OrdersService {
         return later;
     }
 
-    public void deleteCheeseOrder(int detailid, int q) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
+       
 }

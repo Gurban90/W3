@@ -17,25 +17,22 @@
             </style>
 
             <ul>
-                <li><a href="/W3/">Home</a></li>
+                 <li><a href="/W3/main.html">Home</a></li>
                 <li><a href="/W3/client.html">Client Information</a></li>
                 <li><a href="/W3/cheese.html">Cheeses</a></li>
                 <li><a href="/W3/address.html">Your Addresses</a></li>
                 <li><a href="/W3/account.html">Account Information</a></li>
                 <li><a href="/W3/orders.html">Orders</a></li>
-                <li><a href="/W3/rest/adminmain">Admin</a></li>
-                <li style="background:navy;"><a onclick="gotomain()" href="javascript:void(0);">Add Account</a></li>
-                <li style="background:darkgoldenrod;"><a href="/security/login">Login</a></li>
-                <li style="background:darkred;"><a>Logout</a></li>
+                
             </ul>
             <h1>Addresstype</h1>
             <br>
 
-            <form onsubmit="create()" id="form"> 
+            <form id="form"> 
                 Add new Addresstype <br> 
                 Type name:
                 <input type="text" name="typename" required="required" id="typename">
-                <input type="submit" value="Add">
+                 <input type="button" value="Add" id="submit" onclick="create()">
             </form>
 
             <p id="demo"></p>

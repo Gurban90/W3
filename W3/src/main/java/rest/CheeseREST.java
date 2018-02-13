@@ -19,6 +19,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import dao.CheeseFacade;
+import java.util.ArrayList;
 import security.User;
 
 /**
@@ -31,18 +32,30 @@ public class CheeseREST {
 
     @EJB
     private CheeseFacade cheesedao;
-    
-    private User user =  new User();
+
+    private User user = new User();
 
     @GET
     @Secured
     @Produces({MediaType.APPLICATION_JSON})
     public List<Cheese> findAll() {
-        System.out.println(user.getUserName());
+        if(user.getUserRole().equalsIgnoreCase("ADMIN")){
         return cheesedao.findAll();
+        } else return new ArrayList<>();
+    }
+    
+    @GET
+    @Secured
+    @Path("/client")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Cheese> findAll2() {
+       if(user.getUserRole().equalsIgnoreCase("USER")){
+        return cheesedao.findAll();
+        } else return new ArrayList<>();
     }
 
     @GET
+    @Secured
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Cheese find(@PathParam("id") Integer id) {
@@ -50,18 +63,21 @@ public class CheeseREST {
     }
 
     @POST
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     public void create(Cheese entity) {
         cheesedao.create(entity);
     }
 
     @PUT
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Cheese entity) {
         cheesedao.edit(entity);
     }
 
     @DELETE
+    @Secured
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {

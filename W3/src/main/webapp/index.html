@@ -1,39 +1,66 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Main</title>
+        <title>Welcome</title>
         <meta charset="UTF-8" />
         <link type="text/css" href="css/styles.css" rel="stylesheet" />
     </head>
     <body>
         <ul>
-            <li><a href="/W3/">Home</a></li>
-            <li><a href="/W3/client.html">Client Information</a></li>
-            <li><a href="/W3/cheese.html">Cheeses</a></li>
-            <li><a href="/W3/address.html">Your Addresses</a></li>
-            <li><a href="/W3/account.html">Account Information</a></li>
-            <li><a href="/W3/orders.html">Orders</a></li>
-            <li><a href="/W3/rest/adminmain">Admin</a></li>
             <li style="background:navy;"><a onclick="create()" href="javascript:void(0);">Add Account</a></li>
             <li style="background:darkgoldenrod;"><a href="/W3/authentication.html">Login</a></li>
-            <li style="background:darkred;"><a>Logout</a></li>
+            
         </ul>
-        <h1>Main Menu</h1>
+        <h1>Welcome</h1>
         <br></br>
-        
+        <p id="demo"></p>
         <form id="form" style="display:none"> 
-                Add new Account <br> 
-                <br>
-                Username:
-                <input type="text" name="username" required="required" id="username">
-                Password:
-                <input type="password" name="password" required="required" id="password">
-                <input type="button" value="Add" id="submit" onclick="check()">
-                
-            </form>
-        
+            Add new Account <br> 
+            <br>
+            Username:
+            <input type="text" name="username" required="required" id="username">
+            Password:
+            <input type="password" name="password" required="required" id="password">
+            <input type="button" value="Add" id="submit" onclick="check()">
+
+        </form>
+
+        <form id="form2" style="display:none"> 
+            Add new Client <br> 
+            First name:
+            <input type="text" name="firstname" required="required" id="firstname">
+            Last name:
+            <input type="text" name="lastname" required="required" id="lastname">
+            E-mail:
+            <input type="email" name="email" required="required" id="email">
+            <input type="hidden" name="accountID" id="accountID">
+            <button type="button" id="AddClient">Add</button>
+        </form>
+
+
+        <form id="form3" style="display:none"> 
+            Add new Address <br> 
+            Streetname:
+            <input type="text" name="streetname" required="required" id="streetname">
+            Housenumber:
+            <input type="number" name="housenumber" required="required" id="housenumber">
+            Housenumber Addition:
+            <input type="text" name="housenumberaddition"  id="housenumberaddition">
+            Postal Code:
+            <input type="text" name="postalcode" required="required" id="postalcode">
+            City:
+            <input type="text" name="city" required="required" id="city">
+            Client:
+            <input type="hidden" name="clientID" id="clientID">
+            Addresstype:
+            <select name="addresstype" id="addresstype" required="required">
+                <option></option>
+            </select>   
+            <input type="button" value="Add" id="addAddress" onclick="createAddress()">
+        </form>
+
         <p>Welcome to the world of Cheese!</p>
         <p><img src="css/Cheese.jpg" alt="Cheese" /></p>
-          <script src="js/index.js"></script>
+        <script src="js/index.js"></script>
     </body>
 </html>

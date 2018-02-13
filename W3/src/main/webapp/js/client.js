@@ -1,10 +1,22 @@
 "use strict";
 
-fetch('http://localhost:8080/W3/rest/client')
+let token = localStorage.getItem("token");
+
+fetch('http://localhost:8080/W3/rest/client', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
         .then(function (response) {
             return response.json();
         }
         ).then(function (jsonData) {
+            
+    if (jsonData.length < 1) {
+        document.getElementById('form').style.display = 'none';
+    }
     let el;
     el = document.getElementById('clients');
     var data = " ";
@@ -19,6 +31,32 @@ fetch('http://localhost:8080/W3/rest/client')
     return el.innerHTML = data;
 });
 
+fetch('http://localhost:8080/W3/rest/client/client', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
+        .then(function (response) {
+            return response.json();
+        }
+        ).then(function (jsonData) {
+    let el;
+    el = document.getElementById('clients');
+    var data = " ";
+    
+    data += '<tr>';
+    data += '<td>' + jsonData.clientID + '</td>' + '<td>' + jsonData.firstname + '</td>' + '<td>' + jsonData.lastname + '</td>' + '<td>' + jsonData.email + '</td>';
+    data += '<td><button onclick="view(' + jsonData.clientID + ')">View</button></td>';
+    data += '<td><button onclick="edit(' + jsonData.clientID + ')">Edit</button></td>';
+    data += '<td><button onclick="remove(' + jsonData.clientID + ')">Delete</button></td>';
+    data += '</tr>';
+    return el.innerHTML = data;
+
+});
+
+
 function create() {
     var a = document.getElementById("firstname").value;
     var b = document.getElementById("lastname").value;
@@ -30,6 +68,7 @@ function create() {
         body: JSON.stringify(client),
         headers: {
             'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
             'Content-Type': 'application/json'
         }
     }).then(function () {
@@ -41,7 +80,13 @@ function create() {
 function remove(id) {
     document.getElementById("form").innerHTML = " ";
 
-    fetch('http://localhost:8080/W3/rest/client' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/client' + '/' + id, {
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
+            'Content-Type': 'application/json'
+        }
+    })
             .then(function (response) {
                 return response.json();
             }
@@ -61,7 +106,12 @@ function remove(id) {
         document.getElementById("demo").appendChild(button);
         button.addEventListener("click", function () {
             fetch('http://localhost:8080/W3/rest/client' + '/' + id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json, text/plain, */*',
+                    'Authorization': "Bearer " + token,
+                    'Content-Type': 'application/json'
+                }
             }).then(function () {
                 window.location.replace("http://localhost:8080/W3/client.html");
             });
@@ -79,7 +129,13 @@ function edit(id) {
     document.getElementById('form2').style.display = 'block';
 
 
-    fetch('http://localhost:8080/W3/rest/client' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/client' + '/' + id, {
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
+            'Content-Type': 'application/json'
+        }
+    })
             .then(function (response) {
                 return response.json();
             }
@@ -109,6 +165,7 @@ function editor() {
         body: JSON.stringify(client),
         headers: {
             'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
             'Content-Type': 'application/json'
         }
     }).then(function () {
@@ -120,7 +177,13 @@ function editor() {
 
 function view(id) {
     document.getElementById("form").innerHTML = " ";
-    fetch('http://localhost:8080/W3/rest/client' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/client' + '/' + id, {
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
+            'Content-Type': 'application/json'
+        }
+    })
             .then(function (response) {
                 return response.json();
             }
@@ -142,19 +205,21 @@ function view(id) {
                 '<th>' + 'Housenumber' + '</th>' +
                 '<th>' + 'HouseNumberAddition' + '</th>' +
                 '<th>' + 'Postal Code' + '</th>' +
-                '<th>' + 'City' + '</th>'+
+                '<th>' + 'City' + '</th>' +
                 '<th>' + 'Addresstype' + '</th>';
 
         data2 += '</tr>';
+
+
         for (var i = 0; i < jsonData.addressCollection.length; i++) {
             data2 += '<tr>';
             data2 += '<td>' + jsonData.addressCollection[i].addressID + '</td>' + '<td>' + jsonData.addressCollection[i].streetname + '</td>' +
                     '<td>' + jsonData.addressCollection[i].housenumber + '</td>' + '<td>' + jsonData.addressCollection[i].housenumberAddition + '</td>' +
-                    '<td>' + jsonData.addressCollection[i].postalcode + '</td>' + '<td>' + jsonData.addressCollection[i].city + '</td>'+
+                    '<td>' + jsonData.addressCollection[i].postalcode + '</td>' + '<td>' + jsonData.addressCollection[i].city + '</td>' +
                     '<td>' + jsonData.addressCollection[i].addresstypeID.typename + '</td>';
             data2 += '</tr>';
         }
-       
+
         var tbody3 = document.getElementById('orders');
         var data3 = " ";
         data3 += '<tr>';

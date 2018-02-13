@@ -25,6 +25,7 @@ import entity.Cheese;
 import entity.Orders;
 import java.math.BigDecimal;
 import java.util.Collection;
+import security.User;
 
 /**
  *
@@ -33,6 +34,8 @@ import java.util.Collection;
 @Path("/orderdetail")
 @Stateless
 public class OrderdetailREST {
+    
+    private User user = new User();
 
     @EJB
     private OrderdetailFacade orderdetaildao;
@@ -44,12 +47,14 @@ public class OrderdetailREST {
     private CheeseFacade cheesedao;
 
     @GET
+    @Secured
     @Produces({MediaType.APPLICATION_JSON})
     public List<Orderdetail> findAll() {
         return orderdetaildao.findAll();
     }
 
     @GET
+    @Secured
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Orderdetail find(@PathParam("id") Integer id) {
@@ -57,11 +62,14 @@ public class OrderdetailREST {
     }
 
     @POST
+    @Secured
+    @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Orderdetail entity) {
+    public void create(@PathParam("id") Integer id, Orderdetail entity) {
+        Orders a = orderdao.find(id);
+        entity.setOrdersID(a);
         orderdetaildao.create(entity);
-        setCheeseOrder(entity.getOrdersID().getOrdersID(), entity.getCheeseID().getCheeseID(), entity.getQuantity());
-        Orders a = orderdao.find(entity.getOrdersID().getOrdersID());
+        setCheeseOrder(id, entity.getCheeseID().getCheeseID(), entity.getQuantity());
         Collection<Orderdetail> coll = a.getOrderdetailCollection();
         coll.add(entity);
         a.setOrderdetailCollection(coll);
@@ -69,6 +77,7 @@ public class OrderdetailREST {
     }
 
     @PUT
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Orderdetail entity) {
         editCheeseOrder(entity);
@@ -78,6 +87,7 @@ public class OrderdetailREST {
     }
 
     @DELETE
+    @Secured
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {
@@ -106,7 +116,7 @@ public class OrderdetailREST {
 
         if (orderDetail1.getQuantity() <= orderDetail.getQuantity()) {
             int extraQuantity = orderDetail.getQuantity() - orderDetail1.getQuantity();
-            int orderID = orderDetail.getOrdersID().getOrdersID();
+            int orderID = orderDetail1.getOrdersID().getOrdersID();
             int cheeseID = orderDetail.getCheeseID().getCheeseID();
             setCheeseOrder(orderID, cheeseID, extraQuantity);
         } else {

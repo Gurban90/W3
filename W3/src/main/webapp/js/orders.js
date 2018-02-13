@@ -1,6 +1,44 @@
 "use strict";
 
-fetch('http://localhost:8080/W3/rest/orders')
+let token = localStorage.getItem("token");
+
+fetch('http://localhost:8080/W3/rest/orders', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
+        .then(function (response) {
+            return response.json();
+        }
+        ).then(function (jsonData) {
+            
+             
+    let el;
+    el = document.getElementById('orders');
+    var data = " ";
+    for (var i = 0; i < jsonData.length; i++) {
+        var x = new Date(jsonData[i].currentdate).toLocaleDateString();
+        var y = new Date(jsonData[i].enddate).toLocaleDateString();
+        data += '<tr>';
+        data += '<td>' + jsonData[i].ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData[i].totalprice + '</td>' +
+                '<td>' + y + '</td>';
+        data += '<td><button onclick="view(' + jsonData[i].ordersID + ')">View</button></td>';
+        data += '<td><button onclick="remove(' + jsonData[i].ordersID + ')">Delete</button></td>';
+        data += '<td><button onclick="createdetail(' + jsonData[i].ordersID + ')">Add</button></td>';
+        data += '</tr>';
+    }
+    return el.innerHTML = data;
+});
+
+fetch('http://localhost:8080/W3/rest/orders/client', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
         .then(function (response) {
             return response.json();
         }
@@ -23,20 +61,21 @@ fetch('http://localhost:8080/W3/rest/orders')
 });
 
 function create() {
-    var a = null;
+    var a = 0;
     var b = 0;
-    var c = null;
-    var d = null;
+    var c = 0;
+    var d = 0;
 
     var order = {currentdate: a, totalprice: b, enddate: c, clientID: d};
 
     fetch('http://localhost:8080/W3/rest/orders', {
         method: 'POST',
         body: JSON.stringify(order),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
+       headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
     }).then(function (response) {
         return response.json();
     }
@@ -49,7 +88,13 @@ function create() {
 ;
 
 function createdetail(orderid) {
-    fetch('http://localhost:8080/W3/rest/orders' + '/' + orderid)
+    fetch('http://localhost:8080/W3/rest/orders' + '/' + orderid, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -62,7 +107,7 @@ function createdetail(orderid) {
         let y = new Date(jsonData.enddate).toLocaleDateString();
         data += '<tr>';
         data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
-                '<td>' + y + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
+                '<td>' + y + '</td>' ;
         data += '</tr>';
         return el.innerHTML = data;
     });
@@ -71,7 +116,13 @@ function createdetail(orderid) {
 
 
 
-    fetch('http://localhost:8080/W3/rest/cheese')
+    fetch('http://localhost:8080/W3/rest/cheese/client', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -91,9 +142,16 @@ function createdetail(orderid) {
 ;
 
 function check() {
+    alert('check');
     var h = document.getElementById("quantity").value;
     var z = document.getElementById("orderid").value;
-    fetch('http://localhost:8080/W3/rest/orders' + '/' + document.getElementById("orderid").value)
+    fetch('http://localhost:8080/W3/rest/orders' + '/' + document.getElementById("orderid").value, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -115,18 +173,17 @@ function check() {
 }
 
 function finalize(h, y, z) {
-    var a = h;
-    var b = y;
-    var c = z;
-    var orderdetail = {quantity: a, cheeseID: {"cheeseID": b}, ordersID: {"ordersID": c}};
+    alert(z);
+    var orderdetail = {quantity: h, cheeseID: {"cheeseID": y}, ordersID: {"ordersID": z}};
 
-    fetch('http://localhost:8080/W3/rest/orderdetail', {
+    fetch('http://localhost:8080/W3/rest/orderdetail' + '/' + z, {
         method: 'POST',
         body: JSON.stringify(orderdetail),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
     }).then(function () {
         window.location.replace("http://localhost:8080/W3/orders.html");
     });
@@ -135,7 +192,13 @@ function finalize(h, y, z) {
 ;
 
 function remove(id) {
-    fetch('http://localhost:8080/W3/rest/orders' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/orders' + '/' + id, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -147,7 +210,7 @@ function remove(id) {
         var y = new Date(jsonData.enddate).toLocaleDateString();
         data += '<tr>';
         data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
-                '<td>' + y + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
+                '<td>' + y + '</td>';
         data += '</tr>';
 
 
@@ -158,7 +221,12 @@ function remove(id) {
         document.getElementById("demo").appendChild(button);
         button.addEventListener("click", function () {
             fetch('http://localhost:8080/W3/rest/orders' + '/' + id, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
             }).then(function () {
                 window.location.replace("http://localhost:8080/W3/orders.html");
             });
@@ -170,7 +238,13 @@ function remove(id) {
 }
 
 function view(id) {
-    fetch('http://localhost:8080/W3/rest/orders' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/orders' + '/' + id, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -184,7 +258,7 @@ function view(id) {
         var y = new Date(jsonData.enddate).toLocaleDateString();
         data += '<tr>';
         data += '<td>' + jsonData.ordersID + '</td>' + '<td>' + x + '</td>' + '<td>' + jsonData.totalprice + '</td>' +
-                '<td>' + y + '</td>' + '<td>' + "clientID: " + jsonData.clientID.clientID + '</td>';
+                '<td>' + y + '</td>';
         data += '</tr>';
 
         var tbody = document.getElementById('orderdetails');
@@ -211,7 +285,13 @@ function view(id) {
 }
 
 function remove2(detailid) {
-    fetch('http://localhost:8080/W3/rest/orderdetail' + '/' + detailid)
+    fetch('http://localhost:8080/W3/rest/orderdetail' + '/' + detailid, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -239,7 +319,12 @@ function remove2(detailid) {
         document.getElementById("demo").appendChild(button);
         button.addEventListener("click", function () {
             fetch('http://localhost:8080/W3/rest/orderdetail' + '/' + detailid, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
             }).then(function () {
                 window.location.replace("http://localhost:8080/W3/orders.html");
             });
@@ -256,7 +341,13 @@ function edit2(id) {
     document.getElementById('form2').style.display = 'block';
 
 
-    fetch('http://localhost:8080/W3/rest/orderdetail' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/orderdetail' + '/' + id, {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
             .then(function (response) {
                 return response.json();
             }
@@ -277,7 +368,7 @@ function edit2(id) {
         data2 += '</tr>';
 
         return tbody.innerHTML = data2, document.getElementById('orderdetailid').value = jsonData.orderdetailID,
-                document.getElementById('orderidedit').value = jsonData.ordersID.ordersID, document.getElementById('equantity').value = jsonData.quantity,
+                document.getElementById('equantity').value = jsonData.quantity,
                 document.getElementById('echeese').value = jsonData.cheeseID.cheeseID;
     });
 }
@@ -287,16 +378,17 @@ function editor() {
     var aa = document.getElementById("orderdetailid").value;
     var bb = document.getElementById("equantity").value;
     var cc = document.getElementById("echeese").value;
-    var dd = document.getElementById("orderidedit").value;
+    var dd = 1;
     var orderdetailedit = {orderdetailID: aa, quantity: bb, cheeseID: {"cheeseID": cc},
         ordersID: {"ordersID": dd}};
     fetch('http://localhost:8080/W3/rest/orderdetail', {
         method: 'PUT',
         body: JSON.stringify(orderdetailedit),
-        headers: {
-            'Accept': 'application/json, text/plain, */*',
-            'Content-Type': 'application/json'
-        }
+       headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
     }).then(function () {
         window.location.replace("http://localhost:8080/W3/orders.html");
     });

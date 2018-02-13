@@ -19,6 +19,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import dao.AccountFacade;
+import entity.Cheese;
+import java.util.ArrayList;
+import security.User;
 import service.AccountService;
 
 /**
@@ -34,13 +37,41 @@ public class AccountREST {
 
     AccountService pservice = new AccountService();
 
+    private User user = new User();
+
     @GET
+    @Path("/index")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Account> findAll() {
+    public List<Account> findAll3() {
         return accountdao.findAll();
     }
 
     @GET
+    @Secured
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Account> findAll() {
+        if (user.getUserRole().equalsIgnoreCase("ADMIN")) {
+            return accountdao.findAll();
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/client")
+    @Produces({MediaType.APPLICATION_JSON})
+    public Account findClient() {
+        if (user.getUserRole().equalsIgnoreCase("USER")) {
+            int id = user.getUserID();
+            return accountdao.find(id);
+        } else {
+            return new Account();
+        }
+    }
+
+    @GET
+    @Secured
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Account find(@PathParam("id") int id) {
@@ -49,22 +80,26 @@ public class AccountREST {
 
     @POST
     @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Account entity) {
+    @Produces({MediaType.APPLICATION_JSON})
+    public Account create(Account entity) {
         entity.setPassword(pservice.setPassword(entity.getPassword()));
         accountdao.create(entity);
+        return entity;
     }
 
     @PUT
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Account entity) {
         accountdao.edit(entity);
     }
 
     @DELETE
+    @Secured
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {
         accountdao.remove(accountdao.find(id));
     }
-
+   
 }

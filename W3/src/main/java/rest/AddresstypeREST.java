@@ -19,6 +19,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import dao.AddresstypeFacade;
+import java.util.ArrayList;
+import security.User;
 
 /**
  *
@@ -28,17 +30,31 @@ import dao.AddresstypeFacade;
 @Stateless
 public class AddresstypeREST {
 
+    private User user = new User();
+
     @EJB
     private AddresstypeFacade addresstypedao;
 
     @GET
-    @Secured
     @Produces({MediaType.APPLICATION_JSON})
     public List<Addresstype> findAll() {
         return addresstypedao.findAll();
     }
 
     @GET
+    @Secured
+    @Path("/client")
+    @Produces({MediaType.APPLICATION_JSON})
+    public List<Addresstype> findAll2() {
+        if (user.getUserRole().equalsIgnoreCase("ADMIN")) {
+            return addresstypedao.findAll();
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    @GET
+    @Secured
     @Path("/{id}")
     @Produces({MediaType.APPLICATION_JSON})
     public Addresstype find(@PathParam("id") Integer id) {
@@ -46,18 +62,21 @@ public class AddresstypeREST {
     }
 
     @POST
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     public void create(Addresstype entity) {
         addresstypedao.create(entity);
     }
 
     @PUT
+    @Secured
     @Consumes({MediaType.APPLICATION_JSON})
     public void edit(Addresstype entity) {
         addresstypedao.edit(entity);
     }
 
     @DELETE
+    @Secured
     @Path("/{id}")
     @Consumes({MediaType.APPLICATION_JSON})
     public void remove(@PathParam("id") Integer id) {

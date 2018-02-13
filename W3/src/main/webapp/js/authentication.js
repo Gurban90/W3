@@ -1,5 +1,5 @@
 function login() {
-    
+   
     var a = document.getElementById("username").value;
     var b = document.getElementById("password").value;
 
@@ -16,9 +16,10 @@ function login() {
         return response.text();
     }
     ).then(function (text) {
-        return window.sessionStorage.accessToken = text, window.location.replace("http://localhost:8080/W3/index.html"); 
         
-                
+        localStorage.setItem('token' , text);
+        window.location.replace("http://localhost:8080/W3/main.html");
+              
     });
 }
 ;

@@ -5,10 +5,7 @@
  */
 package entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -23,6 +20,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -124,7 +122,7 @@ public class Address implements Serializable {
     public void setCity(String city) {
         this.city = city;
     }
-
+    
     public Addresstype getAddresstypeID() {
         return addresstypeID;
     }
@@ -132,7 +130,7 @@ public class Address implements Serializable {
     public void setAddresstypeID(Addresstype addresstypeID) {
         this.addresstypeID = addresstypeID;
     }
-
+    @XmlTransient
     public Client getClientID() {
         return clientID;
     }

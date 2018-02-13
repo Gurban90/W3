@@ -1,6 +1,14 @@
 "use strict";
 
-fetch('http://localhost:8080/W3/rest/account')
+let token = localStorage.getItem("token");
+
+fetch('http://localhost:8080/W3/rest/account', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
         .then(function (response) {
             return response.json();
         }
@@ -20,14 +28,46 @@ fetch('http://localhost:8080/W3/rest/account')
     return el.innerHTML = data;
 });
 
+fetch('http://localhost:8080/W3/rest/account/client', {
+    headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Authorization': "Bearer " + token,
+        'Content-Type': 'application/json'
+    }
+})
+        .then(function (response) {
+            return response.json();
+        }
+        ).then(function (jsonData) {
+    let el;
+    el = document.getElementById('accounts');
+    var data = " ";
+
+    data += '<tr>';
+    data += '<td>' + jsonData.accountID + '</td>' + '<td>' + jsonData.username + '</td>' + '<td>' + jsonData.password + '</td>' +
+            '<td>' + jsonData.theRole + '</td>';
+    data += '<td><button onclick="view(' + jsonData.accountID + ')">View</button></td>';
+    data += '<td><button onclick="edit(' + jsonData.accountID + ')">Edit</button></td>';
+    data += '</tr>';
+
+    return el.innerHTML = data;
+});
+
+
 function edit(id) {
 
-    fetch('http://localhost:8080/W3/rest/account' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/account' + '/' + id, {
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
+            'Content-Type': 'application/json'
+        }
+    })
             .then(function (response) {
                 return response.json();
             }
             ).then(function (jsonData) {
-                let el;
+        let el;
         el = document.getElementById('accounts');
         var data = " ";
         var client = " ";
@@ -65,32 +105,40 @@ function editor() {
         body: JSON.stringify(editaccount),
         headers: {
             'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
             'Content-Type': 'application/json'
         }
     }).then(function () {
+        localStorage.removeItem('token');
         window.location.replace("http://localhost:8080/W3/account.html");
     });
 }
 ;
 
 function view(id) {
-            fetch('http://localhost:8080/W3/rest/account' + '/' + id)
+    fetch('http://localhost:8080/W3/rest/account' + '/' + id, {
+        headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Authorization': "Bearer " + token,
+            'Content-Type': 'application/json'
+        }
+    })
             .then(function (response) {
                 return response.json();
             }
             ).then(function (jsonData) {
-                let el;
+        let el;
         el = document.getElementById('accounts');
         var data = " ";
         document.getElementById("demo").innerHTML = "Details Account number: " + jsonData.accountID;
 
         var client = "";
-        if (jsonData.clientID === null) {
+        if (jsonData.clientID == null) {
             client = "none";
         } else {
             client = jsonData.clientID.clientID;
         }
-       
+
         data += '<tr>';
         data += '<td>' + jsonData.accountID + '</td>' + '<td>' + jsonData.username + '</td>' + '<td>' + jsonData.password + '</td>' +
                 '<td>' + jsonData.theRole + '</td>' + '<td>' + "Client : " + client + '</td>';

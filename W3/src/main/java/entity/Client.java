@@ -68,7 +68,7 @@ public class Client implements Serializable {
     @JsonIgnoreProperties("clientID")
     private Collection<Orders> ordersCollection;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "clientID")
-    private Account account;
+    private Account accountID;
 
     public Client() {
     }
@@ -109,7 +109,7 @@ public class Client implements Serializable {
         this.email = email;
     }
 
-    @XmlTransient
+    
     public Collection<Address> getAddressCollection() {
         return addressCollection;
     }
@@ -118,7 +118,7 @@ public class Client implements Serializable {
         this.addressCollection = addressCollection;
     }
 
-    @XmlTransient
+    
     public Collection<Orders> getOrdersCollection() {
         return ordersCollection;
     }
@@ -126,13 +126,13 @@ public class Client implements Serializable {
     public void setOrdersCollection(Collection<Orders> ordersCollection) {
         this.ordersCollection = ordersCollection;
     }
-
-    public Account getAccount() {
-        return account;
+    @XmlTransient
+    public Account getAccountID() {
+        return accountID;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountID(Account accountID) {
+        this.accountID = accountID;
     }
 
     @Override

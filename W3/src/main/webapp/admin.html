@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Admin</title>
+        <meta charset="UTF-8" />
+        <link type="text/css" href="css/styles.css" rel="stylesheet" />
+    </head>
+    <body>
+        <ul>
+            <li><a href="/W3/main.html">Home</a></li>
+            <li><a href="/W3/client.html">Client Information</a></li>
+            <li><a href="/W3/cheese.html">Cheeses</a></li>
+            <li><a href="/W3/address.html">Your Addresses</a></li>
+            <li><a href="/W3/account.html">Account Information</a></li>
+            <li><a href="/W3/orders.html">Orders</a></li>
+            <li id="addresstype" style="background:red;"><a href="/W3/addresstype.html">AddressType</a></li>
+            <li id="admin" style="background:navy;"><a onclick="createAdmin()" href="javascript:void(0);">Add Admin Account</a></li>
+        </ul>
+        <h1>Admin</h1>
+        <br></br>
+        
+        
+        
+         <form id="form" style="display:none"> 
+            Add new Account <br> 
+            <br>
+            Username:
+            <input type="text" name="username" required="required" id="username">
+            Password:
+            <input type="password" name="password" required="required" id="password">
+            <input type="button" value="Add" id="submit" onclick="check()">
+
+        </form>
+
+        <p id="demo"></p>
+        
+        <script src="js/admin.js"></script>
+    </body>
+</html>
